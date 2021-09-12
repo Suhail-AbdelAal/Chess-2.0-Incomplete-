@@ -62,11 +62,13 @@ public class Board extends JPanel implements MouseListener {
     }
     // Methods
     public void setPieces() {
-        // Pawns
-        for (int i = 0; i < 8; i++) {
-            board[1][i].put(new Pawn(false, board[1][i], "/ChessAssets/blackPawn.png"));
-            board[6][i].put(new Pawn(true, board[1][i], "/ChessAssets/whitePawn.png"));
-        }
+        // Kings
+        board[7][4].put(new King(true, board[7][4], "/ChessAssets/whiteKing.png"));
+        board[0][4].put(new King(false, board[0][4], "/ChessAssets/blackKing.png"));
+
+        // Queens
+        board[7][3].put(new Queen(true, board[7][3], "/ChessAssets/whiteQueen.png"));
+        board[0][3].put(new Queen(false, board[0][3], "/ChessAssets/blackQueen.png"));
 
         // Rooks
         board[7][0].put(new Rook(true, board[7][0], "/ChessAssets/whiteRook.png"));
@@ -87,20 +89,18 @@ public class Board extends JPanel implements MouseListener {
         board[0][1].put(new Knight(false, board[0][1], "/ChessAssets/blackKnight.png"));
         board[0][6].put(new Knight(false, board[0][6], "/ChessAssets/blackKnight.png"));
 
-
-        // Kings
-        board[7][4].put(new King(true, board[7][4], "/ChessAssets/whiteKing.png"));
-        board[0][4].put(new King(false, board[0][4], "/ChessAssets/blackKing.png"));
-
-        // Queens
-        board[7][3].put(new Queen(true, board[7][3], "/ChessAssets/whiteQueen.png"));
-        board[0][3].put(new Queen(false, board[0][3], "/ChessAssets/blackQueen.png"));
-
+        // Pawns
+        for (int i = 0; i < 8; i++) {
+            board[1][i].put(new Pawn(false, board[1][i], "/ChessAssets/blackPawn.png"));
+            board[6][i].put(new Pawn(true, board[1][i], "/ChessAssets/whitePawn.png"));
+        }
 
         // Adding pieces to the linked list
-        for (int i = 0; i < 8; i++) {
-            bPieces.add(board[1][i].getOccPiece());
-            wPieces.add(board[6][i].getOccPiece());
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 8; j++) {
+                bPieces.add(board[i][j].getOccPiece());
+                wPieces.add(board[7 - j][j].getOccPiece());
+            }
         }
     }
 
