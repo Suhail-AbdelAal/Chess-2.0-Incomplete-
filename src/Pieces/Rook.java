@@ -2,11 +2,12 @@ package Pieces;
 
 import Tiles.Board;
 import Tiles.Square;
+
 import java.util.LinkedList;
 
-public class Pawn extends Piece {
+public class Rook extends Piece {
 
-    public Pawn(boolean white, Square initSq, String img_path) {
+    public Rook(boolean white, Square initSq, String img_path) {
         super(white, initSq, img_path);
     }
 

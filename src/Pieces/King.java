@@ -4,9 +4,9 @@ import Tiles.Board;
 import Tiles.Square;
 import java.util.LinkedList;
 
-public class Pawn extends Piece {
+public class King extends Piece {
 
-    public Pawn(boolean white, Square initSq, String img_path) {
+    public King(boolean white, Square initSq, String img_path) {
         super(white, initSq, img_path);
     }
 
