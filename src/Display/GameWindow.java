@@ -1,7 +1,6 @@
 package Display;
 
 import Tiles.Board;
-import Tiles.Square;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +15,11 @@ public class GameWindow {
     public GameWindow() {
         frame = new JFrame("Chess");
         ///
-            this.board = new Board(this);
-            frame.add(board);
+        this.board = new Board(this);
+        frame.add(board);
 
 
         ///
-//        frame.setLocationRelativeTo(null);
         frame.setSize(new Dimension(width, height));
         frame.setResizable(false);
         frame.pack();

@@ -2,10 +2,11 @@ import States.Game;
 
 import java.awt.*;
 
-public class GameLoop extends Canvas implements Runnable{
+public class GameLoop extends Canvas implements Runnable {
 
     private boolean isRunning;
     private Game game;
+
     public GameLoop(Game game) {
         this.game = game;
     }
@@ -39,9 +40,11 @@ public class GameLoop extends Canvas implements Runnable{
             }
         }
     }
+
     public void update() {
         game.update();
     }
+
     public void draw() {
         game.draw();
 

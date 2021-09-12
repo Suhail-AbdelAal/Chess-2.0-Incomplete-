@@ -32,6 +32,7 @@ public class MouseInput implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
     public boolean isLeftPressed() {
         return leftPressed;
     }
