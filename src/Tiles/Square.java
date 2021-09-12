@@ -9,15 +9,14 @@ public class Square extends JComponent {
 
     private Board board;
     private Piece occPiece;
-    private int color;
-    private boolean isLight = true;
+    private boolean isLight;
 
     private int xNum, yNum;
 
     // Constructors
-    public Square(Board board, int color, int x, int y) {
+    public Square(Board board, boolean isLight, int x, int y) {
         this.board = board;
-        this.color = color;
+        this.isLight = isLight;
         this.xNum = x;
         this.yNum = y;
         this.setBorder(BorderFactory.createEmptyBorder());
@@ -27,7 +26,7 @@ public class Square extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (this.color == 1)
+        if (this.isLight)
             g.setColor(new Color(196, 196, 196));
         else
             g.setColor(new Color(194, 82, 82));
@@ -81,11 +80,4 @@ public class Square extends JComponent {
             return false;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 }

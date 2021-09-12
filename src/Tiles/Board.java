@@ -18,6 +18,7 @@ public class Board extends JPanel implements MouseListener {
     public final LinkedList<Piece> bPieces, wPieces;
     private Piece currPiece;
     private int currX, currY;
+    private boolean isLight = true;
 
     // Constructors
     public Board(GameWindow g) {
@@ -29,17 +30,11 @@ public class Board extends JPanel implements MouseListener {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                int xMod = i % 2;
-                int yMod = j % 2;
-
-                if ((xMod == 0 && yMod == 0) || (xMod == 1 && yMod == 1)) {
-                    board[i][j] = new Square(this, 1, i, j);
-                    this.add(board[i][j]);
-                } else {
-                    board[i][j] = new Square(this, 0, i, j);
-                    this.add(board[i][j]);
-                }
+                board[i][j] = new Square(this, isLight, i, j);
+                this.add(board[i][j]);
+                isLight = !isLight;
             }
+            isLight = !isLight;
         }
         setPieces();
         this.setPreferredSize(new Dimension(512, 512));
