@@ -15,13 +15,16 @@ public class GameWindow {
     public GameWindow() {
         frame = new JFrame("Chess");
         ///
-        this.board = new Board(this);
+        board = new Board(this);
         frame.add(board);
 
 
         ///
         frame.setSize(new Dimension(width, height));
         frame.setResizable(false);
+        frame.setAlwaysOnTop(true);
+//        frame.setLocationRelativeTo(null);
+//        frame.setUndecorated(true);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
 public class Board extends JPanel implements MouseListener {
-
+    int c = 0;
     private GameWindow g;
     private Square[][] board;
 
@@ -25,7 +25,7 @@ public class Board extends JPanel implements MouseListener {
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
         board = new Square[8][8];
-        setLayout(new GridLayout(8, 8, 0, 0));
+        setLayout(new GridLayout(8, 8));
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -60,6 +60,7 @@ public class Board extends JPanel implements MouseListener {
 //            }
 //        }
     }
+
     // Methods
     public void setPieces() {
         // Kings
@@ -77,10 +78,10 @@ public class Board extends JPanel implements MouseListener {
         board[0][7].put(new Rook(false, board[0][7], "/ChessAssets/blackRook.png"));
 
         // Bishops
-        board[7][2].put(new Bishop(true, board[0][2], "/ChessAssets/whiteBishop.png"));
-        board[7][5].put(new Bishop(true, board[0][5], "/ChessAssets/whiteBishop.png"));
-        board[0][2].put(new Bishop(false, board[7][2], "/ChessAssets/blackBishop.png"));
-        board[0][5].put(new Bishop(false, board[7][5], "/ChessAssets/blackBishop.png"));
+        board[7][2].put(new Bishop(true, board[7][2], "/ChessAssets/whiteBishop.png"));
+        board[7][5].put(new Bishop(true, board[7][5], "/ChessAssets/whiteBishop.png"));
+        board[0][2].put(new Bishop(false, board[0][2], "/ChessAssets/blackBishop.png"));
+        board[0][5].put(new Bishop(false, board[0][5], "/ChessAssets/blackBishop.png"));
 
 
         // Knights
@@ -91,8 +92,8 @@ public class Board extends JPanel implements MouseListener {
 
         // Pawns
         for (int i = 0; i < 8; i++) {
+            board[6][i].put(new Pawn(true, board[6][i], "/ChessAssets/whitePawn.png"));
             board[1][i].put(new Pawn(false, board[1][i], "/ChessAssets/blackPawn.png"));
-            board[6][i].put(new Pawn(true, board[1][i], "/ChessAssets/whitePawn.png"));
         }
 
         // Adding pieces to the linked list
