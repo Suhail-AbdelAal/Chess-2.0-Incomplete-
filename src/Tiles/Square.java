@@ -26,6 +26,7 @@ public class Square extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (this.color == 1)
             g.setColor(new Color(196, 196, 196));
         else
