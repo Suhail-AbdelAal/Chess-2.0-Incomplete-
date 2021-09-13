@@ -14,7 +14,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     private GameWindow g;
     private Square[][] board;
-    private Square currSpot;
+    private Square spot_start;
     public final LinkedList<Piece> bPieces, wPieces;
     private Piece currPiece;
     private int currX, currY;
@@ -68,36 +68,36 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     // Methods
     public void setPieces() {
         // Kings
-        board[7][4].put(new King(true, board[7][4], "/ChessAssets/whiteKing.png"));
-        board[0][4].put(new King(false, board[0][4], "/ChessAssets/blackKing.png"));
+        board[7][4].put(new King(1, board[7][4], "/ChessAssets/whiteKing.png"));
+        board[0][4].put(new King(0, board[0][4], "/ChessAssets/blackKing.png"));
 
         // Queens
-        board[7][3].put(new Queen(true, board[7][3], "/ChessAssets/whiteQueen.png"));
-        board[0][3].put(new Queen(false, board[0][3], "/ChessAssets/blackQueen.png"));
+        board[7][3].put(new Queen(1, board[7][3], "/ChessAssets/whiteQueen.png"));
+        board[0][3].put(new Queen(0, board[0][3], "/ChessAssets/blackQueen.png"));
 
         // Rooks
-        board[7][0].put(new Rook(true, board[7][0], "/ChessAssets/whiteRook.png"));
-        board[7][7].put(new Rook(true, board[7][7], "/ChessAssets/whiteRook.png"));
-        board[0][0].put(new Rook(false, board[0][0], "/ChessAssets/blackRook.png"));
-        board[0][7].put(new Rook(false, board[0][7], "/ChessAssets/blackRook.png"));
+        board[7][0].put(new Rook(1, board[7][0], "/ChessAssets/whiteRook.png"));
+        board[7][7].put(new Rook(1, board[7][7], "/ChessAssets/whiteRook.png"));
+        board[0][0].put(new Rook(0, board[0][0], "/ChessAssets/blackRook.png"));
+        board[0][7].put(new Rook(0, board[0][7], "/ChessAssets/blackRook.png"));
 
         // Bishops
-        board[7][2].put(new Bishop(true, board[7][2], "/ChessAssets/whiteBishop.png"));
-        board[7][5].put(new Bishop(true, board[7][5], "/ChessAssets/whiteBishop.png"));
-        board[0][2].put(new Bishop(false, board[0][2], "/ChessAssets/blackBishop.png"));
-        board[0][5].put(new Bishop(false, board[0][5], "/ChessAssets/blackBishop.png"));
+        board[7][2].put(new Bishop(1, board[7][2], "/ChessAssets/whiteBishop.png"));
+        board[7][5].put(new Bishop(1, board[7][5], "/ChessAssets/whiteBishop.png"));
+        board[0][2].put(new Bishop(0, board[0][2], "/ChessAssets/blackBishop.png"));
+        board[0][5].put(new Bishop(0, board[0][5], "/ChessAssets/blackBishop.png"));
 
 
         // Knights
-        board[7][1].put(new Knight(true, board[7][1], "/ChessAssets/whiteKnight.png"));
-        board[7][6].put(new Knight(true, board[7][6], "/ChessAssets/whiteKnight.png"));
-        board[0][1].put(new Knight(false, board[0][1], "/ChessAssets/blackKnight.png"));
-        board[0][6].put(new Knight(false, board[0][6], "/ChessAssets/blackKnight.png"));
+        board[7][1].put(new Knight(1, board[7][1], "/ChessAssets/whiteKnight.png"));
+        board[7][6].put(new Knight(1, board[7][6], "/ChessAssets/whiteKnight.png"));
+        board[0][1].put(new Knight(0, board[0][1], "/ChessAssets/blackKnight.png"));
+        board[0][6].put(new Knight(0, board[0][6], "/ChessAssets/blackKnight.png"));
 
         // Pawns
         for (int i = 0; i < 8; i++) {
-            board[6][i].put(new Pawn(true, board[6][i], "/ChessAssets/whitePawn.png"));
-            board[1][i].put(new Pawn(false, board[1][i], "/ChessAssets/blackPawn.png"));
+            board[6][i].put(new Pawn(1, board[6][i], "/ChessAssets/whitePawn.png"));
+            board[1][i].put(new Pawn(0, board[1][i], "/ChessAssets/blackPawn.png"));
         }
 
         // Adding pieces to the linked list
@@ -118,20 +118,30 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void mousePressed(MouseEvent e) {
         currX = e.getX();
         currY = e.getY();
-        Square spot = (Square) this.getComponentAt(new Point(currX, currY));
-        if (spot.isOccupied()) {
-            currPiece = spot.getOccupyPiece();
-            currSpot = spot;
-            System.out.println(currPiece.isWhite());
-            System.out.println(spot.getxNum() + " " + spot.getyNum());
+        Square spot_end = (Square) this.getComponentAt(new Point(currX, currY));
+
+        if (spot_end.isOccupied()) {
+            currPiece = spot_end.getOccupyPiece();
+            System.out.println(currPiece.getLegalMoves(this).size());
+            spot_start = spot_end;
         }
         else if (currPiece != null) {
-            currPiece.setPosition(spot);
-            spot.put(currPiece);
-            currSpot.removePiece();
-            currPiece = null;
-            repaint();
+            if (currPiece.getLegalMoves(this).contains(spot_end)) {
+                if (spot_end.isOccupied() && currPiece.canMove(this, spot_start, spot_end)) {
+                    spot_end.capture(currPiece);
+                }
+                else {
+                    currPiece.setPosition(spot_end);
+                    spot_end.put(currPiece);
+                    currPiece.setFirstMoveDone(true);
+                    spot_start.removePiece();
+                    currPiece.setFirstMoveDone(true);
+                    currPiece = null;
+                }
+                repaint();
+            }
         }
+
     }
 
     @Override

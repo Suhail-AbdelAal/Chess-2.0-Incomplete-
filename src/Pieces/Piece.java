@@ -13,14 +13,15 @@ public abstract class Piece {
 
     private Square currSq;
     private BufferedImage img;
-    private boolean isWhite = false;
+    private int color;
     private boolean killed = false;
+    private boolean firstMoveDone;
 
     // Constructors
-    public Piece(boolean white, Square initSq, String img_path) {
-        this.isWhite = white;
+    public Piece(int color, Square initSq, String img_path) {
+        this.color = color;
         this.currSq = initSq;
-
+        firstMoveDone = false;
         try {
             if (this.img == null)
                 this.img = ImageIO.read(getClass().getResource(img_path));
@@ -38,12 +39,12 @@ public abstract class Piece {
     }
 
     // Setters & Getters
-    public boolean isWhite() {
-        return this.isWhite;
+    public int getColor() {
+        return this.color;
     }
 
-    public void setWhite(boolean white) {
-        this.isWhite = white;
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public boolean isKilled() {
@@ -70,7 +71,15 @@ public abstract class Piece {
         this.img = img;
     }
 
+    public void setFirstMoveDone(boolean firstMoveDone) {
+        this.firstMoveDone = firstMoveDone;
+    }
+
+    public boolean isFirstMoveDone() {
+        return firstMoveDone;
+    }
+
     // abstract methods
     public abstract boolean canMove(Board board, Square start, Square end);
-    public abstract LinkedList<Square> getLegalMoves(Board b);
+    public abstract LinkedList<Square> getLegalMoves(Board board);
 }

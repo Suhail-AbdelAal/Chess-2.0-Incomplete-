@@ -6,8 +6,8 @@ import java.util.LinkedList;
 
 public class King extends Piece {
 
-    public King(boolean white, Square initSq, String img_path) {
-        super(white, initSq, img_path);
+    public King(int color, Square initSq, String img_path) {
+        super(color, initSq, img_path);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class King extends Piece {
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board b) {
+    public LinkedList<Square> getLegalMoves(Board board) {
         return null;
     }
 }

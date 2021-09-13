@@ -7,8 +7,8 @@ import java.util.LinkedList;
 
 public class Rook extends Piece {
 
-    public Rook(boolean white, Square initSq, String img_path) {
-        super(white, initSq, img_path);
+    public Rook(int color, Square initSq, String img_path) {
+        super(color, initSq, img_path);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board b) {
+    public LinkedList<Square> getLegalMoves(Board board) {
         return null;
     }
 }

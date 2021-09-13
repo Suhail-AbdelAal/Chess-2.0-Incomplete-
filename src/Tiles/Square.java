@@ -4,6 +4,7 @@ import Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class Square extends JComponent {
 
@@ -30,6 +31,7 @@ public class Square extends JComponent {
             g.setColor(new Color(238, 238, 210));
         else
             g.setColor(new Color(118, 150, 86));
+
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
         if (occPiece != null)
@@ -42,14 +44,19 @@ public class Square extends JComponent {
         p.setPosition(this);
     }
     public void removePiece() {
-        occPiece = null;
+        this.occPiece = null;
     }
     public void capture(Piece p) {
-        if (getOccupyPiece().isWhite())
+        if (getOccupyPiece().getColor() == 1) {
             board.wPieces.remove(getOccupyPiece());
-        else
+            this.occPiece = null;
+        }
+        else {
             board.bPieces.remove(getOccupyPiece());
-        this.occPiece = p;
+            this.occPiece = null;
+        }
+        this.put(p);
+        repaint();
     }
 
     // Setters & Getters
