@@ -7,13 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
-public class Board extends JPanel implements MouseListener {
-    int c = 0;
+public class Board extends JPanel implements MouseListener, MouseMotionListener {
+
     private GameWindow g;
     private Square[][] board;
-
+    private Square currSpot;
     public final LinkedList<Piece> bPieces, wPieces;
     private Piece currPiece;
     private int currX, currY;
@@ -37,6 +38,8 @@ public class Board extends JPanel implements MouseListener {
             isLight = !isLight;
         }
         setPieces();
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         this.setPreferredSize(new Dimension(512, 512));
         this.setMaximumSize(new Dimension(512, 512));
         this.setMinimumSize(this.getPreferredSize());
@@ -100,12 +103,11 @@ public class Board extends JPanel implements MouseListener {
         // Adding pieces to the linked list
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
-                bPieces.add(board[i][j].getOccPiece());
-                wPieces.add(board[7 - j][j].getOccPiece());
+                bPieces.add(board[i][j].getOccupyPiece());
+                wPieces.add(board[7 - i][j].getOccupyPiece());
             }
         }
     }
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -116,20 +118,28 @@ public class Board extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         currX = e.getX();
         currY = e.getY();
-        Square spot = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
+        Square spot = (Square) this.getComponentAt(new Point(currX, currY));
         if (spot.isOccupied()) {
-            currPiece = spot.getOccPiece();
-            System.out.println("yellow");
+            currPiece = spot.getOccupyPiece();
+            currSpot = spot;
+            System.out.println(currPiece.isWhite());
+            System.out.println(spot.getxNum() + " " + spot.getyNum());
+        }
+        else if (currPiece != null) {
+            currPiece.setPosition(spot);
+            spot.put(currPiece);
+            currSpot.removePiece();
+            currPiece = null;
             repaint();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Square spot = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
-        currPiece = null;
-        System.out.println("red");
-        repaint();
+//        Square spot = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
+//        currPiece = null;
+//        System.out.println("red");
+//        repaint();
     }
 
     @Override
@@ -145,5 +155,15 @@ public class Board extends JPanel implements MouseListener {
     // Setters & Getters
     public Square[][] getSquareArray() {
         return board;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }

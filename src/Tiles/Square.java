@@ -45,10 +45,10 @@ public class Square extends JComponent {
         occPiece = null;
     }
     public void capture(Piece p) {
-        if (getOccPiece().isWhite())
-            board.wPieces.remove(getOccPiece());
+        if (getOccupyPiece().isWhite())
+            board.wPieces.remove(getOccupyPiece());
         else
-            board.bPieces.remove(getOccPiece());
+            board.bPieces.remove(getOccupyPiece());
         this.occPiece = p;
     }
 
@@ -69,12 +69,12 @@ public class Square extends JComponent {
         this.yNum = yNum;
     }
 
-    public Piece getOccPiece() {
+    public Piece getOccupyPiece() {
         return occPiece;
     }
 
     public boolean isOccupied() {
-        if (this.occPiece == null)
+        if (this.occPiece != null)
             return true;
         else
             return false;

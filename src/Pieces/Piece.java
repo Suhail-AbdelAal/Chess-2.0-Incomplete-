@@ -22,9 +22,9 @@ public abstract class Piece {
         this.currSq = initSq;
 
         try {
-            if (this.img == null) {
+            if (this.img == null)
                 this.img = ImageIO.read(getClass().getResource(img_path));
-            }
+
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
         }
