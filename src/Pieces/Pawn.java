@@ -16,14 +16,14 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Board board, Square start, Square end) {
-        if (start.getOccupyPiece().getColor() != end.getOccupyPiece().getColor())
-            return true;
-        return false;
+        return this.getLegalMoves(board).contains(end);
     }
 
     @Override
     public LinkedList<Square> getLegalMoves(Board board) {
         this.legalMoves.clear();
+        leftSide = null;
+        rightSide = null;
         Square[][] sq = board.getSquareArray();
         Square pos = this.getPosition();
 

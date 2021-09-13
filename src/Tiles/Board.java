@@ -119,27 +119,20 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         currX = e.getX();
         currY = e.getY();
         Square spot_end = (Square) this.getComponentAt(new Point(currX, currY));
-
+        System.out.println("Black: " + bPieces.size() + " | " + "White: " + wPieces.size());
         if (spot_end.isOccupied()) {
             currPiece = spot_end.getOccupyPiece();
-            System.out.println(currPiece.getLegalMoves(this).size());
+//            System.out.println(currPiece.getLegalMoves(this).size());
             spot_start = spot_end;
         }
+
         else if (currPiece != null) {
-            if (currPiece.getLegalMoves(this).contains(spot_end)) {
-                if (spot_end.isOccupied() && currPiece.canMove(this, spot_start, spot_end)) {
-                    spot_end.capture(currPiece);
-                }
-                else {
-                    currPiece.setPosition(spot_end);
-                    spot_end.put(currPiece);
-                    currPiece.setFirstMoveDone(true);
-                    spot_start.removePiece();
-                    currPiece.setFirstMoveDone(true);
-                    currPiece = null;
-                }
-                repaint();
-            }
+            currPiece.setPosition(spot_end);
+            spot_end.put(currPiece);
+            currPiece.setFirstMoveDone(true);
+            spot_start.removePiece();
+            currPiece = null;
+            repaint();
         }
 
     }

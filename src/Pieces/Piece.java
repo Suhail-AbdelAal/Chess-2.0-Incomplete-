@@ -14,17 +14,17 @@ public abstract class Piece {
     private Square currSq;
     private BufferedImage img;
     private int color;
-    private boolean killed = false;
+    private boolean whiteTurn;
     private boolean firstMoveDone;
 
     // Constructors
     public Piece(int color, Square initSq, String img_path) {
         this.color = color;
         this.currSq = initSq;
+        whiteTurn = true;
         firstMoveDone = false;
         try {
-            if (this.img == null)
-                this.img = ImageIO.read(getClass().getResource(img_path));
+            this.img = ImageIO.read(getClass().getResource(img_path));
 
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
@@ -45,14 +45,6 @@ public abstract class Piece {
 
     public void setColor(int color) {
         this.color = color;
-    }
-
-    public boolean isKilled() {
-        return this.killed;
-    }
-
-    public void setKilled(boolean killed) {
-        this.killed = killed;
     }
 
     public Square getPosition() {
