@@ -31,9 +31,9 @@ public abstract class Piece {
 
     // Methods
     public void draw(Graphics g) {
-        int x = currSq.getX() + 8;
+        int x = currSq.getX() + 3;
         int y = currSq.getY() + 6;
-        g.drawImage(this.img, x, y, 50, 55, null);
+        g.drawImage(this.img, x, y, 60, 55, null);
     }
 
     // Setters & Getters

@@ -71,37 +71,37 @@ public class Board extends JPanel {
     // Methods
     public void setPieces() {
         // Kings
-        board[7][4].put(new King(1, board[7][4], "/ChessAssets/whiteKing.png"));
-        board[0][4].put(new King(0, board[0][4], "/ChessAssets/blackKing.png"));
-
-        // Queens
-        board[7][3].put(new Queen(1, board[7][3], "/ChessAssets/whiteQueen.png"));
-        board[0][3].put(new Queen(0, board[0][3], "/ChessAssets/blackQueen.png"));
+//        board[7][4].put(new King(1, board[7][4], "/ChessAssets/whiteKing.png"));
+//        board[0][4].put(new King(0, board[0][4], "/ChessAssets/blackKing.png"));
+//
+//        // Queens
+//        board[7][3].put(new Queen(1, board[7][3], "/ChessAssets/whiteQueen.png"));
+//        board[0][3].put(new Queen(0, board[0][3], "/ChessAssets/blackQueen.png"));
 
         // Rooks
-        board[7][0].put(new Rook(1, board[7][0], "/ChessAssets/whiteRook.png"));
+        board[3][3].put(new Rook(1, board[3][3], "/ChessAssets/whiteRook.png"));
         board[7][7].put(new Rook(1, board[7][7], "/ChessAssets/whiteRook.png"));
         board[0][0].put(new Rook(0, board[0][0], "/ChessAssets/blackRook.png"));
         board[0][7].put(new Rook(0, board[0][7], "/ChessAssets/blackRook.png"));
 
-        // Bishops
-        board[7][2].put(new Bishop(1, board[7][2], "/ChessAssets/whiteBishop.png"));
-        board[7][5].put(new Bishop(1, board[7][5], "/ChessAssets/whiteBishop.png"));
-        board[0][2].put(new Bishop(0, board[0][2], "/ChessAssets/blackBishop.png"));
-        board[0][5].put(new Bishop(0, board[0][5], "/ChessAssets/blackBishop.png"));
+//        // Bishops
+//        board[7][2].put(new Bishop(1, board[7][2], "/ChessAssets/whiteBishop.png"));
+//        board[7][5].put(new Bishop(1, board[7][5], "/ChessAssets/whiteBishop.png"));
+//        board[0][2].put(new Bishop(0, board[0][2], "/ChessAssets/blackBishop.png"));
+//        board[0][5].put(new Bishop(0, board[0][5], "/ChessAssets/blackBishop.png"));
+//
+//
+//        // Knights
+//        board[7][1].put(new Knight(1, board[7][1], "/ChessAssets/whiteKnight.png"));
+//        board[7][6].put(new Knight(1, board[7][6], "/ChessAssets/whiteKnight.png"));
+//        board[0][1].put(new Knight(0, board[0][1], "/ChessAssets/blackKnight.png"));
+//        board[0][6].put(new Knight(0, board[0][6], "/ChessAssets/blackKnight.png"));
 
-
-        // Knights
-        board[3][3].put(new Knight(1, board[3][3], "/ChessAssets/whiteKnight.png"));
-        board[7][6].put(new Knight(1, board[7][6], "/ChessAssets/whiteKnight.png"));
-        board[0][1].put(new Knight(0, board[0][1], "/ChessAssets/blackKnight.png"));
-        board[0][6].put(new Knight(0, board[0][6], "/ChessAssets/blackKnight.png"));
-
-        // Pawns
-        for (int i = 0; i < 8; i++) {
-            board[6][i].put(new Pawn(1, board[6][i], "/ChessAssets/whitePawn.png"));
-            board[1][i].put(new Pawn(0, board[1][i], "/ChessAssets/blackPawn.png"));
-        }
+//        // Pawns
+//        for (int i = 0; i < 8; i++) {
+//            board[6][i].put(new Pawn(1, board[6][i], "/ChessAssets/whitePawn.png"));
+//            board[1][i].put(new Pawn(0, board[1][i], "/ChessAssets/blackPawn.png"));
+//        }
 
         // Adding pieces to the linked list
         for (int i = 0; i < 2; i++) {

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class Knight extends Piece {
 
-    private LinkedList<Square> legalMoves;
+    private final LinkedList<Square> legalMoves;
 
     // Constructors
     public Knight(int color, Square initSq, String img_path) {
