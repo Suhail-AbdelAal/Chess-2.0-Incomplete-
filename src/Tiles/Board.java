@@ -14,12 +14,16 @@ import java.util.LinkedList;
 public class Board extends JPanel {
 
     private GameWindow g;
+
     private Square[][] board;
     private Square spot_start;
-    public final LinkedList<Piece> bPieces, wPieces;
+
     private Piece currPiece;
-    private int currX, currY;
+    private boolean whiteTurn;
+    public final LinkedList<Piece> wPieces;
+    public final LinkedList<Piece> bPieces;
     private boolean isLight;
+
     private MouseInput mouseInput;
 
     // Constructors
@@ -27,8 +31,11 @@ public class Board extends JPanel {
         this.g = g;
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
+
         board = new Square[8][8];
         isLight = true;
+        whiteTurn = true;
+
         mouseInput = new MouseInput(this, currPiece, spot_start);
         setLayout(new GridLayout(8, 8));
 
@@ -114,5 +121,11 @@ public class Board extends JPanel {
         return board;
     }
 
+    public boolean isWhiteTurn() {
+        return whiteTurn;
+    }
 
+    public void setWhiteTurn(boolean whiteTurn) {
+        this.whiteTurn = whiteTurn;
+    }
 }

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 public class Player {
 
     private Title title;
-    private boolean whiteTurn;
     private LinkedList<Piece> wPieces;
     private LinkedList<Piece> bPieces;
 
@@ -15,6 +14,5 @@ public class Player {
         this.title = title;
         this.wPieces = wPieces;
         this.bPieces = bPieces;
-        whiteTurn = true;
     }
 }

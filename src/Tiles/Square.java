@@ -56,7 +56,7 @@ public class Square extends JComponent {
             this.occPiece = null;
         }
         this.put(p);
-        repaint();
+//        repaint();
     }
 
     // Setters & Getters

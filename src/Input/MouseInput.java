@@ -28,22 +28,64 @@ public class MouseInput implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Square spot_end = (Square) board.getComponentAt(new Point(e.getX(), e.getY()));
-        if (spot_end.isOccupied()) {
-            currPiece = spot_end.getOccupyPiece();
-//            System.out.println(currPiece.getLegalMoves(this).size());
-            spot_start = spot_end;
-        }
+        int currX = e.getX();
+        int currY = e.getY();
+        Square spot_end = (Square) board.getComponentAt(new Point(currX, currY));
 
-        else if (currPiece != null) {
-            currPiece.setPosition(spot_end);
-            spot_end.put(currPiece);
-            currPiece.setFirstMoveDone(true);
-            spot_start.removePiece();
-            currPiece = null;
-            board.repaint();
-        }
+        if (board.isWhiteTurn()) {
+            System.out.println("White Turn!");
+            if (spot_end.isOccupied() && spot_end.getOccupyPiece().getColor() == 1) {
+                currPiece = spot_end.getOccupyPiece();
+//                System.out.println(currPiece.getLegalMoves(board).size());
+                spot_start = spot_end;
+            }
 
+            else if (currPiece != null) {
+                if (!spot_end.isOccupied()) {
+                    spot_end.put(currPiece);
+                    spot_start.removePiece();
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(false);
+                }
+                else {
+                    spot_end.capture(currPiece);
+                    spot_start.removePiece();
+                    System.out.println("Black: " + board.bPieces.size());
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(false);
+                }
+
+                currPiece = null;
+                board.repaint();
+            }
+        }
+        else {
+            System.out.println("Black Turn!");
+            if (spot_end.isOccupied() && spot_end.getOccupyPiece().getColor() == 0) {
+                currPiece = spot_end.getOccupyPiece();
+//                System.out.println(currPiece.getLegalMoves(board).size());
+                spot_start = spot_end;
+            }
+
+            else if (currPiece != null) {
+                if (!spot_end.isOccupied()) {
+                    spot_end.put(currPiece);
+                    spot_start.removePiece();
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(true);
+                }
+                else {
+                    spot_end.capture(currPiece);
+                    spot_start.removePiece();
+                    System.out.println("White: " + board.wPieces.size());
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(true);
+                }
+
+                currPiece = null;
+                board.repaint();
+            }
+        }
     }
 
     @Override
