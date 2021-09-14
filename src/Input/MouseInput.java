@@ -32,6 +32,7 @@ public class MouseInput implements MouseListener {
         int currY = e.getY();
         Square spot_end = (Square) board.getComponentAt(new Point(currX, currY));
 
+
         if (board.isWhiteTurn()) {
             System.out.println("White Turn!");
             if (spot_end.isOccupied() && spot_end.getOccupyPiece().getColor() == 1) {
@@ -51,7 +52,6 @@ public class MouseInput implements MouseListener {
                     else {
                         spot_end.capture(currPiece);
                         spot_start.removePiece();
-                        System.out.println("Black: " + board.bPieces.size());
                         currPiece.setFirstMoveDone(true);
                         board.setWhiteTurn(false);
                     }
@@ -80,7 +80,6 @@ public class MouseInput implements MouseListener {
                     else {
                         spot_end.capture(currPiece);
                         spot_start.removePiece();
-                        System.out.println("White: " + board.wPieces.size());
                         currPiece.setFirstMoveDone(true);
                         board.setWhiteTurn(true);
                     }
@@ -90,6 +89,8 @@ public class MouseInput implements MouseListener {
                 board.repaint();
             }
         }
+        System.out.println("White: " + board.wPieces.size());
+        System.out.println("Black: " + board.bPieces.size());
     }
 
     @Override
