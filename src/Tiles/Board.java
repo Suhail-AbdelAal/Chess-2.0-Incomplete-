@@ -3,12 +3,8 @@ package Tiles;
 import Display.GameWindow;
 import Input.MouseInput;
 import Pieces.*;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
 public class Board extends JPanel {
@@ -96,7 +92,7 @@ public class Board extends JPanel {
 
 
         // Knights
-        board[7][1].put(new Knight(1, board[7][1], "/ChessAssets/whiteKnight.png"));
+        board[3][3].put(new Knight(1, board[3][3], "/ChessAssets/whiteKnight.png"));
         board[7][6].put(new Knight(1, board[7][6], "/ChessAssets/whiteKnight.png"));
         board[0][1].put(new Knight(0, board[0][1], "/ChessAssets/blackKnight.png"));
         board[0][6].put(new Knight(0, board[0][6], "/ChessAssets/blackKnight.png"));
