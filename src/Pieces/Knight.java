@@ -23,9 +23,9 @@ public class Knight extends Piece {
     public LinkedList<Square> getLegalMoves(Board board) {
         this.legalMoves.clear();
         Square[][] sq = board.getSquareArray();
-        Square Pos = this.getPosition();
         int x = this.getPosition().getxNum();
         int y = this.getPosition().getyNum();
+
         for (int i = 2; i >= -2; i--) {
             if (i == 0) continue;
             int adjuster = (Math.abs(i) == 1) ? 2 : 1;

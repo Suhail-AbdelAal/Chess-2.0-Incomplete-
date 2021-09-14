@@ -24,10 +24,12 @@ public class Pawn extends Piece {
         this.legalMoves.clear();
         leftSide = null;
         rightSide = null;
+
         Square[][] sq = board.getSquareArray();
         Square pos = this.getPosition();
 
         int m = !this.isFirstMoveDone() ? 2 : 1;
+
         if (this.getColor() == 1) {
             for (int i = 1; i <= m; i++) {
                 if (sq[pos.getxNum() - i][pos.getyNum()].isOccupied())
