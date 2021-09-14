@@ -1,6 +1,7 @@
 package Tiles;
 
 import Display.GameWindow;
+import Input.MouseInput;
 import Pieces.*;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
-public class Board extends JPanel implements MouseListener, MouseMotionListener {
+public class Board extends JPanel {
 
     private GameWindow g;
     private Square[][] board;
@@ -19,6 +20,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private Piece currPiece;
     private int currX, currY;
     private boolean isLight;
+    private MouseInput mouseInput;
 
     // Constructors
     public Board(GameWindow g) {
@@ -27,6 +29,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         this.wPieces = new LinkedList<>();
         board = new Square[8][8];
         isLight = true;
+        mouseInput = new MouseInput(this, currPiece, spot_start);
         setLayout(new GridLayout(8, 8));
 
         for (int i = 0; i < 8; i++) {
@@ -38,8 +41,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
             isLight = !isLight;
         }
         setPieces();
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
+        this.addMouseListener(mouseInput);
         this.setPreferredSize(new Dimension(512, 512));
         this.setMaximumSize(new Dimension(512, 512));
         this.setMinimumSize(this.getPreferredSize());
@@ -48,8 +50,6 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     @Override
     public void paintComponent(Graphics g) {
-        // super.paintComponent(g);
-
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square sq = board[i][j];
@@ -109,64 +109,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        currX = e.getX();
-        currY = e.getY();
-        Square spot_end = (Square) this.getComponentAt(new Point(currX, currY));
-        System.out.println("Black: " + bPieces.size() + " | " + "White: " + wPieces.size());
-        if (spot_end.isOccupied()) {
-            currPiece = spot_end.getOccupyPiece();
-//            System.out.println(currPiece.getLegalMoves(this).size());
-            spot_start = spot_end;
-        }
-
-        else if (currPiece != null) {
-            currPiece.setPosition(spot_end);
-            spot_end.put(currPiece);
-            currPiece.setFirstMoveDone(true);
-            spot_start.removePiece();
-            currPiece = null;
-            repaint();
-        }
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-//        Square spot = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
-//        currPiece = null;
-//        System.out.println("red");
-//        repaint();
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
     // Setters & Getters
     public Square[][] getSquareArray() {
         return board;
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
 
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
 }

@@ -14,14 +14,12 @@ public abstract class Piece {
     private Square currSq;
     private BufferedImage img;
     private int color;
-    private boolean whiteTurn;
     private boolean firstMoveDone;
 
     // Constructors
     public Piece(int color, Square initSq, String img_path) {
         this.color = color;
         this.currSq = initSq;
-        whiteTurn = true;
         firstMoveDone = false;
         try {
             this.img = ImageIO.read(getClass().getResource(img_path));
