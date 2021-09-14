@@ -32,9 +32,7 @@ public class Knight extends Piece {
             for (int j = adjuster; j >= -2; j -= adjuster * 2) {
                 try {
                     legalMoves.add(sq[x + i][y + j]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    continue;
-                }
+                } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
         }
         return legalMoves;
