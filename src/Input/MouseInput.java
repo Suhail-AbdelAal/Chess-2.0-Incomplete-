@@ -35,8 +35,8 @@ public class MouseInput implements MouseListener {
 
         if (board.isWhiteTurn()) {
             System.out.println("White Turn!");
-            if (spot_end.isOccupied() && spot_end.getOccupyPiece().getColor() == 1) {
-                currPiece = spot_end.getOccupyPiece();
+            if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 1) {
+                currPiece = spot_end.getPiece();
                 System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
@@ -45,16 +45,13 @@ public class MouseInput implements MouseListener {
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
                     if (!spot_end.isOccupied()) {
                         spot_end.put(currPiece);
-                        spot_start.removePiece();
-                        currPiece.setFirstMoveDone(true);
-                        board.setWhiteTurn(false);
                     }
                     else {
                         spot_end.capture(currPiece);
-                        spot_start.removePiece();
-                        currPiece.setFirstMoveDone(true);
-                        board.setWhiteTurn(false);
                     }
+                    spot_start.removePiece();
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(false);
                 }
 
                 currPiece = null;
@@ -63,8 +60,8 @@ public class MouseInput implements MouseListener {
         }
         else {
             System.out.println("Black Turn!");
-            if (spot_end.isOccupied() && spot_end.getOccupyPiece().getColor() == 0) {
-                currPiece = spot_end.getOccupyPiece();
+            if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 0) {
+                currPiece = spot_end.getPiece();
                 System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
@@ -73,24 +70,20 @@ public class MouseInput implements MouseListener {
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
                     if (!spot_end.isOccupied()) {
                         spot_end.put(currPiece);
-                        spot_start.removePiece();
-                        currPiece.setFirstMoveDone(true);
-                        board.setWhiteTurn(true);
+
                     }
                     else {
                         spot_end.capture(currPiece);
-                        spot_start.removePiece();
-                        currPiece.setFirstMoveDone(true);
-                        board.setWhiteTurn(true);
                     }
+                    spot_start.removePiece();
+                    currPiece.setFirstMoveDone(true);
+                    board.setWhiteTurn(true);
                 }
 
                 currPiece = null;
                 board.repaint();
             }
         }
-        System.out.println("White: " + board.wPieces.size());
-        System.out.println("Black: " + board.bPieces.size());
     }
 
     @Override

@@ -45,12 +45,12 @@ public class Pawn extends Piece {
                 rightSide = sq[pos.getxNum() - 1][pos.getyNum() + 1];
 
             if (leftSide != null) {
-                if (leftSide.isOccupied() && leftSide.getOccupyPiece().getColor() == 0)
+                if (leftSide.isOccupied() && leftSide.getPiece().getColor() == 0)
                     legalMoves.add(leftSide);
             }
 
             if (rightSide != null) {
-                if (rightSide.isOccupied() && rightSide.getOccupyPiece().getColor() == 0)
+                if (rightSide.isOccupied() && rightSide.getPiece().getColor() == 0)
                     legalMoves.add(rightSide);
             }
 
@@ -72,12 +72,12 @@ public class Pawn extends Piece {
             rightSide = sq[pos.getxNum() + 1][pos.getyNum() - 1];
 
         if (leftSide != null) {
-            if (leftSide.isOccupied() && leftSide.getOccupyPiece().getColor() == 1)
+            if (leftSide.isOccupied() && leftSide.getPiece().getColor() == 1)
                 legalMoves.add(leftSide);
         }
 
         if (rightSide != null) {
-            if (rightSide.isOccupied() && rightSide.getOccupyPiece().getColor() == 1)
+            if (rightSide.isOccupied() && rightSide.getPiece().getColor() == 1)
                 legalMoves.add(rightSide);
         }
 

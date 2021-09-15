@@ -16,7 +16,10 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Board board, Square start, Square end) {
-        return false;
+        if (end.isOccupied())
+            return start.getPiece().getColor() != end.getPiece().getColor();
+
+        return true;
     }
 
     @Override
@@ -31,7 +34,8 @@ public class Knight extends Piece {
             int adjuster = (Math.abs(i) == 1) ? 2 : 1;
             for (int j = adjuster; j >= -2; j -= adjuster * 2) {
                 try {
-                    legalMoves.add(sq[x + i][y + j]);
+                    if (this.canMove(board, sq[x][y], sq[x + i][y + j]))
+                        legalMoves.add(sq[x + i][y + j]);
                 } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
         }

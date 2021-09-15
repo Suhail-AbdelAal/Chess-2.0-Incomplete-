@@ -4,7 +4,6 @@ import Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.LinkedList;
 
 public class Square extends JComponent {
 
@@ -47,12 +46,12 @@ public class Square extends JComponent {
         this.occPiece = null;
     }
     public void capture(Piece p) {
-        if (getOccupyPiece().getColor() == 1) {
-            board.wPieces.remove(getOccupyPiece());
+        if (getPiece().getColor() == 1) {
+            board.wPieces.remove(getPiece());
             this.occPiece = null;
         }
         else {
-            board.bPieces.remove(getOccupyPiece());
+            board.bPieces.remove(getPiece());
             this.occPiece = null;
         }
         this.put(p);
@@ -76,7 +75,7 @@ public class Square extends JComponent {
         this.yNum = yNum;
     }
 
-    public Piece getOccupyPiece() {
+    public Piece getPiece() {
         return occPiece;
     }
 
