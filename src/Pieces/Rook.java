@@ -24,10 +24,9 @@ public class Rook extends Piece {
     public LinkedList<Square> getLegalMoves(Board board) {
         this.legalMoves.clear();
         Square[][] sq = board.getSquareArray();
-        Square currSq = this.getPosition();
 
-        int x = currSq.getxNum();
-        int y = currSq.getyNum();
+        int x = this.getPosition().getxNum();
+        int y = this.getPosition().getyNum();
 
         int[] occupations = super.Linear_Occupied_Spots(board, x, y);
 
