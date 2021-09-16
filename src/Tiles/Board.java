@@ -57,7 +57,6 @@ public class Board extends JPanel {
         setPreferredSize(new Dimension(513, 512));
         setMaximumSize(new Dimension(513, 512));
         setMinimumSize(this.getPreferredSize());
-        setSize(new Dimension(513, 512));
     }
 
     @Override
