@@ -68,7 +68,7 @@ public class Board extends JPanel {
             g2.setPaint(new Color(57, 255, 0, 120));
             g2.fillRect(currPiece.getPosition().getX(), currPiece.getPosition().getY(), 64, 64);
             for (Square i : currPiece.getLegalMoves(this)) {
-                g2.setStroke(new BasicStroke(2));
+                g2.setStroke(new BasicStroke(3));
                 if (i.isOccupied())
                     g2.setPaint(new Color(255, 111, 32));
                 else
