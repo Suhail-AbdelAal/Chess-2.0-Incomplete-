@@ -33,6 +33,7 @@ public abstract class Piece {
     public int getColor() {
         return this.color;
     }
+
     public void setColor(int color) {
         this.color = color;
     }
@@ -130,7 +131,108 @@ public abstract class Piece {
     }
 
     public int[] Diagonal_Occupied_Spots(Board board, int x, int y) {
-        return  null;
+        Square[][] sq = board.getSquareArray();
+
+        int top_x_left = x;
+        int top_y_left = y;
+        int top_x_right = x;
+        int top_y_right = y;
+
+        int bottom_x_left = x;
+        int bottom_y_left = y;
+        int bottom_x_right = x;
+        int bottom_y_right = y;
+
+        // TOP RIGHT
+        for (int i = 1; i <= 7; i++) {
+            try {
+                if (sq[x - i][y + i].isOccupied()) {
+                    if (sq[x - i][y + i].getPiece().getColor() == sq[x][y].getPiece().getColor()) {
+                        top_x_right = x - i + 1;
+                        top_y_right = y + i - 1;
+                    }
+                    else {
+                        top_x_right = x - i;
+                        top_y_right = y + i;
+                    }
+                    break;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
+            }
+            top_x_right = x - i;
+            top_y_right = y + i;
+        }
+        System.out.println("TOP RIGHT: " + top_x_right + " " + top_y_right);
+
+        // TOP LEFT
+        for (int i = 1; i <= 7; i++) {
+            try {
+                if (sq[x - i][y - i].isOccupied()) {
+                    if (sq[x - i][y - i].getPiece().getColor() == sq[x][y].getPiece().getColor()) {
+                        top_x_left = x - i + 1;
+                        top_y_left = y - i + 1;
+                    }
+                    else {
+                        top_x_left = x - i;
+                        top_y_left = y - i;
+                    }
+                    break;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
+            }
+            top_x_left = x - i;
+            top_y_left = y - i;
+        }
+        System.out.println("TOP LEFT: " + top_x_left + " " + top_y_left);
+
+        // BOTTOM RIGHT
+        for (int i = 1; i <= 7; i++) {
+            try {
+                if (sq[x + i][y + i].isOccupied()) {
+                    if (sq[x + i][y + i].getPiece().getColor() == sq[x][y].getPiece().getColor()) {
+                        bottom_x_right = x + i - 1;
+                        bottom_y_right = y + i - 1;
+                    }
+                    else {
+                        bottom_x_right = x + i;
+                        bottom_y_right = y + i;
+                    }
+                    break;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
+            }
+            bottom_x_right = x + i;
+            bottom_y_right = y + i;
+        }
+        System.out.println("BOTTOM RIGHT: " + bottom_x_right + " " + bottom_y_right);
+
+        // BOTTOM LEFT
+        for (int i = 1; i <= 7; i++) {
+            try {
+                if (sq[x + i][y - i].isOccupied()) {
+                    if (sq[x + i][y - i].getPiece().getColor() == sq[x][y].getPiece().getColor()) {
+                        bottom_x_left = x + i - 1;
+                        bottom_y_left = y - i + 1;
+                    }
+                    else {
+                        bottom_x_left = x + i;
+                        bottom_y_left = y - i;
+                    }
+                    break;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
+            }
+            bottom_x_left = x + i;
+            bottom_y_left = y - i;
+        }
+        System.out.println("BOTTOM LEFT: " + bottom_x_left + " " + bottom_y_left);
+
+        return new int[] {top_x_right, top_y_right, top_x_left, top_y_left,
+                bottom_x_right, bottom_y_right, bottom_x_left, bottom_y_left};
     }
 
     // abstract methods

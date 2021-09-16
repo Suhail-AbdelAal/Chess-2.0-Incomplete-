@@ -31,10 +31,13 @@ public class Rook extends Piece {
 
         int[] occupations = super.Linear_Occupied_Spots(board, x, y);
 
+        // Vertically
         for (int i = occupations[0]; i <= occupations[1]; i++) {
             if (i != x)
                 legalMoves.add(sq[i][y]);
         }
+
+        // Horizontally
         for (int i = occupations[3]; i <= occupations[2]; i++) {
             if (i != y)
                 legalMoves.add(sq[x][i]);

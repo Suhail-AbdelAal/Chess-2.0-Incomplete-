@@ -84,7 +84,7 @@ public class Board extends JPanel {
         board[0][0].put(new Rook(0, board[0][0], "/ChessAssets/blackRook.png"));
         board[0][7].put(new Rook(0, board[0][7], "/ChessAssets/blackRook.png"));
 
-//        // Bishops
+        // Bishops
         board[7][2].put(new Bishop(1, board[7][2], "/ChessAssets/whiteBishop.png"));
         board[7][5].put(new Bishop(1, board[7][5], "/ChessAssets/whiteBishop.png"));
         board[0][2].put(new Bishop(0, board[0][2], "/ChessAssets/blackBishop.png"));
