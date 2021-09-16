@@ -28,6 +28,7 @@ public class Queen extends Piece{
         int y = this.getPosition().getyNum();
 
         // --- Linear Occupations ---
+
         int[] linear_occupations = super.Linear_Occupied_Spots(board, x, y);
 
         // Vertically

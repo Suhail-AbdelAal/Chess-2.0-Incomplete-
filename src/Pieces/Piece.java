@@ -163,7 +163,6 @@ public abstract class Piece {
             top_x_right = x - i;
             top_y_right = y + i;
         }
-        System.out.println("TOP RIGHT: " + top_x_right + " " + top_y_right);
 
         // TOP LEFT
         for (int i = 1; i <= 7; i++) {
@@ -185,7 +184,6 @@ public abstract class Piece {
             top_x_left = x - i;
             top_y_left = y - i;
         }
-        System.out.println("TOP LEFT: " + top_x_left + " " + top_y_left);
 
         // BOTTOM RIGHT
         for (int i = 1; i <= 7; i++) {
@@ -207,7 +205,6 @@ public abstract class Piece {
             bottom_x_right = x + i;
             bottom_y_right = y + i;
         }
-        System.out.println("BOTTOM RIGHT: " + bottom_x_right + " " + bottom_y_right);
 
         // BOTTOM LEFT
         for (int i = 1; i <= 7; i++) {
@@ -229,7 +226,6 @@ public abstract class Piece {
             bottom_x_left = x + i;
             bottom_y_left = y - i;
         }
-        System.out.println("BOTTOM LEFT: " + bottom_x_left + " " + bottom_y_left);
 
         return new int[] {top_x_right, top_y_right, top_x_left, top_y_left,
                 bottom_x_right, bottom_y_right, bottom_x_left, bottom_y_left};

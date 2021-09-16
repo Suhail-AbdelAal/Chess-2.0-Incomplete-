@@ -36,7 +36,6 @@ public class Rook extends Piece {
             if (i != x)
                 legalMoves.add(sq[i][y]);
         }
-
         // Horizontally
         for (int i = occupations[3]; i <= occupations[2]; i++) {
             if (i != y)
