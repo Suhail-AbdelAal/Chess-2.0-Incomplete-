@@ -4,6 +4,7 @@ import Tiles.Board;
 import Tiles.Square;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public abstract class Piece {
 
     private Square currSq;
     private BufferedImage img;
+    private JPanel panel = new JPanel();
     private int color;
     private boolean firstMoveDone;
 
@@ -23,10 +25,11 @@ public abstract class Piece {
         firstMoveDone = false;
         try {
             this.img = ImageIO.read(getClass().getResource(img_path));
-
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
         }
+
+
     }
 
     // Setters & Getters
@@ -64,9 +67,12 @@ public abstract class Piece {
 
     // Methods
     public void draw(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+
         int x = currSq.getX() + 3;
         int y = currSq.getY() + 6;
-        g.drawImage(this.img, x, y, 60, 55, null);
+
+        g2.drawImage(this.img, x, y, 60, 55, null);
     }
 
     public int[] Linear_Occupied_Spots(Board board, int x, int y) {

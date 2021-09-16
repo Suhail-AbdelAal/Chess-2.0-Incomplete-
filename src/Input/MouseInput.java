@@ -3,7 +3,6 @@ package Input;
 import Pieces.Piece;
 import Tiles.Board;
 import Tiles.Square;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,9 +14,8 @@ public class MouseInput implements MouseListener {
     private Square spot_start;
 
     // Constructors
-    public MouseInput(Board board, Piece currPiece, Square spot_start) {
+    public MouseInput(Board board, Square spot_start) {
         this.board = board;
-        this.currPiece = currPiece;
         this.spot_start = spot_start;
     }
 
@@ -34,13 +32,13 @@ public class MouseInput implements MouseListener {
 
 
         if (board.isWhiteTurn()) {
-            System.out.println("White Turn!");
             if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 1) {
                 currPiece = spot_end.getPiece();
+                board.setCurrPiece(currPiece);
+                board.repaint();
                 System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
-
             else if (currPiece != null) {
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
                     if (!spot_end.isOccupied()) {
@@ -55,13 +53,15 @@ public class MouseInput implements MouseListener {
                 }
 
                 currPiece = null;
+                board.setCurrPiece(null);
                 board.repaint();
             }
         }
         else {
-            System.out.println("Black Turn!");
             if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 0) {
                 currPiece = spot_end.getPiece();
+                board.setCurrPiece(currPiece);
+                board.repaint();
                 System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
@@ -75,12 +75,14 @@ public class MouseInput implements MouseListener {
                     else {
                         spot_end.capture(currPiece);
                     }
+                    board.repaint();
                     spot_start.removePiece();
                     currPiece.setFirstMoveDone(true);
                     board.setWhiteTurn(true);
                 }
 
                 currPiece = null;
+                board.setCurrPiece(null);
                 board.repaint();
             }
         }
@@ -99,6 +101,10 @@ public class MouseInput implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public Piece getCurrPiece() {
+        return  currPiece;
     }
 
 

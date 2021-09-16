@@ -3,19 +3,22 @@ package Tiles;
 import Display.GameWindow;
 import Input.MouseInput;
 import Pieces.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class Board extends JPanel {
 
     private GameWindow g;
-
     private Square[][] board;
     private Square spot_start;
+    private BufferedImage chessBoard;
 
-    private Piece currPiece;
     private boolean whiteTurn;
+    private Piece currPiece;
     public final LinkedList<Piece> wPieces;
     public final LinkedList<Piece> bPieces;
     private boolean isLight;
@@ -24,6 +27,12 @@ public class Board extends JPanel {
 
     // Constructors
     public Board(GameWindow g) {
+        try {
+            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard.png"));
+        } catch (IOException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+
         this.g = g;
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
@@ -32,7 +41,7 @@ public class Board extends JPanel {
         isLight = true;
         whiteTurn = true;
 
-        mouseInput = new MouseInput(this, currPiece, spot_start);
+        mouseInput = new MouseInput(this, spot_start);
         setLayout(new GridLayout(8, 8));
 
         for (int i = 0; i < 8; i++) {
@@ -53,12 +62,24 @@ public class Board extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(chessBoard, 0, 0, 512, 512, null);
+        if (currPiece != null) {
+            for (Square i : currPiece.getLegalMoves(this)) {
+                g2.setStroke(new BasicStroke(3));
+                g2.setPaint(Color.green);
+                g2.drawRect(i.getX(), i.getY(), 64, 64);
+            }
+        }
+
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square sq = board[i][j];
-                sq.paintComponent(g);
+                sq.paintComponent(g2);
             }
         }
+
 
 //        if (currPiece != null) {
 //            if (!(currPiece.isWhite()) || (currPiece.isWhite())) {
@@ -123,5 +144,9 @@ public class Board extends JPanel {
 
     public void setWhiteTurn(boolean whiteTurn) {
         this.whiteTurn = whiteTurn;
+    }
+
+    public void setCurrPiece(Piece currPiece) {
+        this.currPiece = currPiece;
     }
 }

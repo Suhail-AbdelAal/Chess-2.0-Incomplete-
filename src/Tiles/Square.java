@@ -25,16 +25,13 @@ public class Square extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if (this.isLight)
-            g.setColor(new Color(206, 206, 206));
-        else
-            g.setColor(new Color(178, 79, 79));
-
-        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-
-        if (occPiece != null)
-            occPiece.draw(g);
+        Graphics2D g2 = (Graphics2D) g;
+        if (occPiece != null) {
+//            g2.setStroke(new BasicStroke(3));
+//            g2.setPaint(Color.green);
+//            g2.drawRect(occPiece.getPosition().getX(), occPiece.getPosition().getY(), 64, 64);
+            occPiece.draw(g2);
+        }
     }
 
     // Methods
@@ -46,16 +43,14 @@ public class Square extends JComponent {
         this.occPiece = null;
     }
     public void capture(Piece p) {
-        if (getPiece().getColor() == 1) {
+        if (getPiece().getColor() == 1)
             board.wPieces.remove(getPiece());
-            this.occPiece = null;
-        }
-        else {
+
+        else
             board.bPieces.remove(getPiece());
-            this.occPiece = null;
-        }
+
+        this.occPiece = null;
         this.put(p);
-//        repaint();
     }
 
     // Setters & Getters
@@ -80,10 +75,7 @@ public class Square extends JComponent {
     }
 
     public boolean isOccupied() {
-        if (this.occPiece != null)
-            return true;
-        else
-            return false;
+        return this.occPiece != null;
     }
 
 }
