@@ -24,8 +24,8 @@ public class Bishop extends Piece{
         legalMoves.clear();
         Square[][] sq = board.getSquareArray();
 
-        int x = this.getPosition().getxNum();
-        int y = this.getPosition().getyNum();
+        int x = this.getSquare().getxNum();
+        int y = this.getSquare().getyNum();
 
         int[] occupations = super.Diagonal_Occupied_Spots(board, x, y);
 

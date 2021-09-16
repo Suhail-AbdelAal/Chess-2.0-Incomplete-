@@ -65,7 +65,7 @@ public class Board extends JPanel {
         g2.drawImage(chessBoard, 0, 0, 512, 512, null);
         if (currPiece != null) {
             g2.setPaint(new Color(57, 255, 0, 120));
-            g2.fillRect(currPiece.getPosition().getX(), currPiece.getPosition().getY(), 64, 64);
+            g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 64, 64);
             for (Square i : currPiece.getLegalMoves(this)) {
                 g2.setStroke(new BasicStroke(3));
                 if (i.isOccupied())

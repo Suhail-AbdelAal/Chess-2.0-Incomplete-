@@ -26,7 +26,7 @@ public class Pawn extends Piece {
         rightSide = null;
 
         Square[][] sq = board.getSquareArray();
-        Square pos = this.getPosition();
+        Square pos = this.getSquare();
 
         int m = !this.isFirstMoveDone() ? 2 : 1;
 

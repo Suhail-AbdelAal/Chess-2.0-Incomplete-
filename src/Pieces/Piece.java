@@ -41,7 +41,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public Square getPosition() {
+    public Square getSquare() {
         return currSq;
     }
 

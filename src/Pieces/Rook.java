@@ -25,8 +25,8 @@ public class Rook extends Piece {
         this.legalMoves.clear();
         Square[][] sq = board.getSquareArray();
 
-        int x = this.getPosition().getxNum();
-        int y = this.getPosition().getyNum();
+        int x = this.getSquare().getxNum();
+        int y = this.getSquare().getyNum();
 
         int[] occupations = super.Linear_Occupied_Spots(board, x, y);
 
