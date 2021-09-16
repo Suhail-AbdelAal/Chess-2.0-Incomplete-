@@ -54,10 +54,10 @@ public class Board extends JPanel {
         }
         setPieces();
         addMouseListener(mouseInput);
-        setPreferredSize(new Dimension(512, 512));
-        setMaximumSize(new Dimension(512, 512));
+        setPreferredSize(new Dimension(513, 512));
+        setMaximumSize(new Dimension(513, 512));
         setMinimumSize(this.getPreferredSize());
-        setSize(new Dimension(512, 512));
+        setSize(new Dimension(513, 512));
     }
 
     @Override
@@ -65,9 +65,14 @@ public class Board extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(chessBoard, 0, 0, 512, 512, null);
         if (currPiece != null) {
+            g2.setPaint(new Color(57, 255, 0, 120));
+            g2.fillRect(currPiece.getPosition().getX(), currPiece.getPosition().getY(), 64, 64);
             for (Square i : currPiece.getLegalMoves(this)) {
-                g2.setStroke(new BasicStroke(3));
-                g2.setPaint(Color.green);
+                g2.setStroke(new BasicStroke(2));
+                if (i.isOccupied())
+                    g2.setPaint(new Color(255, 111, 32));
+                else
+                    g2.setPaint(Color.green);
                 g2.drawRect(i.getX(), i.getY(), 64, 64);
             }
         }
