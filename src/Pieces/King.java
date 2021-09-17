@@ -7,12 +7,16 @@ import java.util.LinkedList;
 public class King extends Piece {
 
     private LinkedList<Square> legalMoves;
+    private boolean kingChecked;
 
     public King(int color, Square initSq, String img_path) {
         super(color, initSq, img_path);
         legalMoves = new LinkedList<>();
+        kingChecked = false;
     }
 
+
+    // Methods
     @Override
     public boolean canMove(Board board, Square start, Square end) {
         if (end.isOccupied())
@@ -39,5 +43,14 @@ public class King extends Piece {
             }
         }
         return legalMoves;
+    }
+    /////
+
+    public void setChecked(boolean kingChecked) {
+        this.kingChecked = kingChecked;
+    }
+
+    public boolean isKingChecked() {
+        return kingChecked;
     }
 }

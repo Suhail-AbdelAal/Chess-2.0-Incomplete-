@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static Tiles.Board.blackKing;
+import static Tiles.Board.whiteKing;
+
 public class MouseInput implements MouseListener {
 
     private Board board;
@@ -41,6 +44,8 @@ public class MouseInput implements MouseListener {
             }
             else if (currPiece != null) {
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
+
+
                     if (!spot_end.isOccupied()) {
                         spot_end.put(currPiece);
                     }

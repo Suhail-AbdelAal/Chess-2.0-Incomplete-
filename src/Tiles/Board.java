@@ -19,6 +19,7 @@ public class Board extends JPanel {
 
     private boolean whiteTurn;
     private Piece currPiece;
+    public static King whiteKing, blackKing;
     public final LinkedList<Piece> wPieces;
     public final LinkedList<Piece> bPieces;
     private boolean isLight;
@@ -63,16 +64,33 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(chessBoard, 0, 0, 512, 512, null);
+
+
+        for (Piece i : bPieces) {
+            if (i.getLegalMoves(this).contains(whiteKing.getSquare())) {
+                g2.setPaint(new Color(255, 0, 0, 180));
+                g2.fillRect(whiteKing.getSquare().getX(), whiteKing.getSquare().getY(), 65, 65);
+            }
+        }
+        for (Piece i : wPieces) {
+            if (i.getLegalMoves(this).contains(blackKing.getSquare())) {
+                g2.setPaint(new Color(255, 0, 0, 180));
+                g2.fillRect(blackKing.getSquare().getX(), blackKing.getSquare().getY(), 65, 65);
+            }
+        }
+
         if (currPiece != null) {
             g2.setPaint(new Color(57, 255, 0, 180));
-            g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 64, 64);
+            g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 65, 65);
+
+
             for (Square i : currPiece.getLegalMoves(this)) {
                 g2.setStroke(new BasicStroke(3));
                 if (i.isOccupied())
                     g2.setPaint(Color.red);
                 else
                     g2.setPaint(Color.green);
-                g2.drawRect(i.getX(), i.getY(), 64, 64);
+                g2.drawRect(i.getX() + 3, i.getY() + 3, 60, 60);
             }
         }
 
@@ -95,9 +113,12 @@ public class Board extends JPanel {
 
     // Methods
     public void setPieces() {
+
         // Kings
-        board[7][4].put(new King(1, board[7][4], "/ChessAssets/whiteKing.png"));
-        board[0][4].put(new King(0, board[0][4], "/ChessAssets/blackKing.png"));
+        whiteKing = new King(1, board[7][4], "/ChessAssets/whiteKing.png");
+        board[7][4].put(whiteKing);
+        blackKing = new King(0, board[0][4], "/ChessAssets/blackKing.png");
+        board[0][4].put(blackKing);
 
         // Queens
         board[7][3].put(new Queen(1, board[7][3], "/ChessAssets/whiteQueen.png"));
