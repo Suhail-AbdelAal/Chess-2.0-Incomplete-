@@ -28,7 +28,7 @@ public class Board extends JPanel {
     // Constructors
     public Board(GameWindow g) {
         try {
-            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard.png"));
+            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard2.png"));
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
         }
@@ -64,12 +64,12 @@ public class Board extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(chessBoard, 0, 0, 512, 512, null);
         if (currPiece != null) {
-            g2.setPaint(new Color(57, 255, 0, 120));
+            g2.setPaint(new Color(57, 255, 0, 180));
             g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 64, 64);
             for (Square i : currPiece.getLegalMoves(this)) {
                 g2.setStroke(new BasicStroke(3));
                 if (i.isOccupied())
-                    g2.setPaint(new Color(255, 111, 32));
+                    g2.setPaint(Color.red);
                 else
                     g2.setPaint(Color.green);
                 g2.drawRect(i.getX(), i.getY(), 64, 64);
