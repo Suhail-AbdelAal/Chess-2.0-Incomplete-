@@ -4,7 +4,7 @@ import Tiles.Board;
 import Tiles.Square;
 import java.util.LinkedList;
 
-public class King extends Piece {
+public class King extends Piece implements CheckMate {
 
     private LinkedList<Square> legalMoves;
     private boolean kingChecked;
@@ -46,11 +46,29 @@ public class King extends Piece {
     }
     /////
 
-    public void setChecked(boolean kingChecked) {
+
+    @Override
+    public boolean isKingChecked() {
+        return this.kingChecked;
+    }
+
+    @Override
+    public void setKingChecked(boolean kingChecked) {
         this.kingChecked = kingChecked;
     }
 
-    public boolean isKingChecked() {
-        return kingChecked;
+    @Override
+    public boolean causesCheck() {
+        return false;
+    }
+
+    @Override
+    public boolean canBlock() {
+        return false;
+    }
+
+    @Override
+    public boolean checkMate() {
+        return false;
     }
 }

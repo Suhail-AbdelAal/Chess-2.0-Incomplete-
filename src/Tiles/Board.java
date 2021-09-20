@@ -28,11 +28,11 @@ public class Board extends JPanel {
 
     // Constructors
     public Board(GameWindow g) {
-        try {
-            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard2.png"));
-        } catch (IOException e) {
-            System.out.println("File not found: " + e.getMessage());
-        }
+//        try {
+//            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard.png"));
+//        } catch (IOException e) {
+//            System.out.println("File not found: " + e.getMessage());
+//        }
 
         this.g = g;
         this.bPieces = new LinkedList<>();
@@ -93,7 +93,6 @@ public class Board extends JPanel {
                 g2.drawRect(i.getX() + 3, i.getY() + 3, 60, 60);
             }
         }
-
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
