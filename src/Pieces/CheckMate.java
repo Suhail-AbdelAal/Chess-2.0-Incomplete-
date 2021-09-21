@@ -1,9 +1,13 @@
 package Pieces;
 
+import Tiles.Board;
+
+import java.util.LinkedList;
+
 public interface CheckMate {
-    boolean isKingChecked();
+    void checkDetector(Board board);
     void setKingChecked(boolean kingChecked);
-    boolean causesCheck();
-    boolean canBlock();
+    boolean isKingChecked();
+    LinkedList<Piece> getAllowedPieces(Board board);
     boolean checkMate();
 }

@@ -55,7 +55,7 @@ public class Queen extends Piece{
             if (i != x && j != y)
                 legalMoves.add(sq[i][j]);
         }
-
         return legalMoves;
     }
+
 }

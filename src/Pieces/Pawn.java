@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class Pawn extends Piece {
 
-    LinkedList<Square> legalMoves;
+    private LinkedList<Square> legalMoves;
     private Square leftSide;
     private Square rightSide;
     public Pawn(int color, Square initSq, String img_path) {
@@ -53,7 +53,6 @@ public class Pawn extends Piece {
                 if (rightSide.isOccupied() && rightSide.getPiece().getColor() == 0)
                     legalMoves.add(rightSide);
             }
-
             return legalMoves;
         }
 
@@ -80,9 +79,7 @@ public class Pawn extends Piece {
             if (rightSide.isOccupied() && rightSide.getPiece().getColor() == 1)
                 legalMoves.add(rightSide);
         }
-
         return legalMoves;
     }
-
 
 }

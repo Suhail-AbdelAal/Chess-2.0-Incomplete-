@@ -2,7 +2,6 @@ package Pieces;
 
 import Tiles.Board;
 import Tiles.Square;
-
 import java.util.LinkedList;
 
 public class Rook extends Piece {
@@ -40,9 +39,7 @@ public class Rook extends Piece {
             if (i != y)
                 legalMoves.add(sq[x][i]);
         }
-
         return legalMoves;
     }
-
 
 }

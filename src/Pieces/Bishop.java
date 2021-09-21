@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class Bishop extends Piece{
 
-    private final LinkedList<Square> legalMoves;
+    private LinkedList<Square> legalMoves;
 
     // Constructors
     public Bishop(int color, Square initSq, String img_path) {
@@ -39,7 +39,7 @@ public class Bishop extends Piece{
             if (i != x && j != y)
                 legalMoves.add(sq[i][j]);
         }
-
         return legalMoves;
     }
+
 }

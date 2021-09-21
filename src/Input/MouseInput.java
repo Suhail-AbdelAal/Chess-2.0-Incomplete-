@@ -6,14 +6,13 @@ import Tiles.Square;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import static Tiles.Board.blackKing;
 import static Tiles.Board.whiteKing;
 
 public class MouseInput implements MouseListener {
 
     private Board board;
-    private Piece currPiece;
+    public static Piece currPiece;
     private Square spot_start;
 
     // Constructors
@@ -33,64 +32,57 @@ public class MouseInput implements MouseListener {
         int currY = e.getY();
         Square spot_end = (Square) board.getComponentAt(new Point(currX, currY));
 
-
+        // WHITE
         if (board.isWhiteTurn()) {
             if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 1) {
                 currPiece = spot_end.getPiece();
                 board.setCurrPiece(currPiece);
-                board.repaint();
-                System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
             else if (currPiece != null) {
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
-
-
                     if (!spot_end.isOccupied()) {
                         spot_end.put(currPiece);
-                    }
-                    else {
+                    } else {
                         spot_end.capture(currPiece);
                     }
                     spot_start.removePiece();
                     currPiece.setFirstMoveDone(true);
                     board.setWhiteTurn(false);
+                    board.setLastPlay(spot_start, spot_end);
+                    currPiece = null;
+                    board.setCurrPiece(null);
                 }
-
-                currPiece = null;
-                board.setCurrPiece(null);
-                board.repaint();
             }
         }
+
+        //  BLACK
         else {
             if (spot_end.isOccupied() && spot_end.getPiece().getColor() == 0) {
                 currPiece = spot_end.getPiece();
                 board.setCurrPiece(currPiece);
-                board.repaint();
-                System.out.println(currPiece.getLegalMoves(board).size());
                 spot_start = spot_end;
             }
-
             else if (currPiece != null) {
+
                 if (currPiece.getLegalMoves(board).contains(spot_end)) {
                     if (!spot_end.isOccupied()) {
                         spot_end.put(currPiece);
-
-                    }
-                    else {
+                    } else {
                         spot_end.capture(currPiece);
                     }
-                    board.repaint();
                     spot_start.removePiece();
                     currPiece.setFirstMoveDone(true);
                     board.setWhiteTurn(true);
+                    board.setLastPlay(spot_start, spot_end);
+                    currPiece = null;
+                    board.setCurrPiece(null);
                 }
-
-                currPiece = null;
-                board.setCurrPiece(null);
-                board.repaint();
             }
         }
+        whiteKing.checkDetector(board);
+        blackKing.checkDetector(board);
+        board.repaint();
     }
 
     @Override

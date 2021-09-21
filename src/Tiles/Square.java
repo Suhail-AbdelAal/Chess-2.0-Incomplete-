@@ -7,16 +7,14 @@ import java.awt.*;
 
 public class Square extends JComponent {
 
-    private Board board;
+    private final Board board;
     private Piece occPiece;
-    private boolean isLight;
 
     private int xNum, yNum;
 
     // Constructors
-    public Square(Board board, boolean isLight, int x, int y) {
+    public Square(Board board, int x, int y) {
         this.board = board;
-        this.isLight = isLight;
         this.xNum = x;
         this.yNum = y;
         this.setBorder(BorderFactory.createEmptyBorder());

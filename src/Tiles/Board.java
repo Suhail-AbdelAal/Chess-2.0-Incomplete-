@@ -13,8 +13,9 @@ import java.util.LinkedList;
 public class Board extends JPanel {
 
     private GameWindow g;
-    private Square[][] board;
+    private final Square[][] board;
     private Square spot_start;
+    private Square start, end;
     private BufferedImage chessBoard;
 
     private boolean whiteTurn;
@@ -22,14 +23,13 @@ public class Board extends JPanel {
     public static King whiteKing, blackKing;
     public final LinkedList<Piece> wPieces;
     public final LinkedList<Piece> bPieces;
-    private boolean isLight;
 
     private MouseInput mouseInput;
 
     // Constructors
     public Board(GameWindow g) {
 //        try {
-//            chessBoard = ImageIO.read(getClass().getResource("/ChessAssets/chessBoard.png"));
+//            chessBoard = ImageIO.read(Board.class.getResource("/ChessAssets/chessBoard.png"));
 //        } catch (IOException e) {
 //            System.out.println("File not found: " + e.getMessage());
 //        }
@@ -37,9 +37,10 @@ public class Board extends JPanel {
         this.g = g;
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
+        start = null;
+        end = null;
 
         board = new Square[8][8];
-        isLight = true;
         whiteTurn = true;
 
         mouseInput = new MouseInput(this, spot_start);
@@ -47,11 +48,9 @@ public class Board extends JPanel {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                board[i][j] = new Square(this, isLight, i, j);
+                board[i][j] = new Square(this, i, j);
                 this.add(board[i][j]);
-                isLight = !isLight;
             }
-            isLight = !isLight;
         }
         setPieces();
         addMouseListener(mouseInput);
@@ -65,32 +64,44 @@ public class Board extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(chessBoard, 0, 0, 512, 512, null);
 
-
-        for (Piece i : bPieces) {
-            if (i.getLegalMoves(this).contains(whiteKing.getSquare())) {
-                g2.setPaint(new Color(255, 0, 0, 180));
-                g2.fillRect(whiteKing.getSquare().getX(), whiteKing.getSquare().getY(), 65, 65);
+        // Check
+        if (whiteKing.isKingChecked()) {
+            System.out.println(whiteKing.getBlockMoves(this).size());
+            for (Square i : whiteKing.getBlockMoves(this)) {
+                g2.setStroke(new BasicStroke(5));
+                g2.setPaint(Color.blue);
+                g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
             }
+            g2.setPaint(new Color(255, 0, 0, 180));
+            g2.fillRect(whiteKing.getSquare().getX(), whiteKing.getSquare().getY(), 65, 65);
         }
-        for (Piece i : wPieces) {
-            if (i.getLegalMoves(this).contains(blackKing.getSquare())) {
-                g2.setPaint(new Color(255, 0, 0, 180));
-                g2.fillRect(blackKing.getSquare().getX(), blackKing.getSquare().getY(), 65, 65);
-            }
+        else if (blackKing.isKingChecked()) {
+            g2.setPaint(new Color(255, 0, 0, 180));
+            g2.fillRect(blackKing.getSquare().getX(), blackKing.getSquare().getY(), 65, 65);
         }
 
+        // Last Move
+        if (start != null) {
+            g2.setPaint(new Color(246, 246, 105));
+            g2.fillRect(start.getX(), start.getY(), 65, 65);
+            g2.fillRect(end.getX(), end.getY(), 65, 65);
+        }
+
+        // Guide Lines
         if (currPiece != null) {
-            g2.setPaint(new Color(57, 255, 0, 180));
+            g2.setPaint(new Color(246, 246, 105));
             g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 65, 65);
-
 
             for (Square i : currPiece.getLegalMoves(this)) {
                 g2.setStroke(new BasicStroke(3));
-                if (i.isOccupied())
+                if (i.isOccupied()) {
                     g2.setPaint(Color.red);
-                else
-                    g2.setPaint(Color.green);
-                g2.drawRect(i.getX() + 3, i.getY() + 3, 60, 60);
+                    g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+                }
+                else {
+                    g2.setPaint(new Color(180, 100, 100));
+                    g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
+                }
             }
         }
 
@@ -172,5 +183,10 @@ public class Board extends JPanel {
 
     public void setCurrPiece(Piece currPiece) {
         this.currPiece = currPiece;
+    }
+
+    public void setLastPlay(Square start, Square end) {
+        this.start = start;
+        this.end = end;
     }
 }
