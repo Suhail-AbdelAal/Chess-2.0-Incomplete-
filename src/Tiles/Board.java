@@ -24,8 +24,6 @@ public class Board extends JPanel {
     public final LinkedList<Piece> wPieces;
     public final LinkedList<Piece> bPieces;
 
-    private MouseInput mouseInput;
-
     // Constructors
     public Board(GameWindow g) {
         try {
@@ -42,7 +40,8 @@ public class Board extends JPanel {
         board = new Square[8][8];
         whiteTurn = true;
 
-        mouseInput = new MouseInput(this, spot_start);
+        MouseInput mouseInput = new MouseInput(this, spot_start);
+
         setLayout(new GridLayout(8, 8));
 
         for (int i = 0; i < 8; i++) {
