@@ -28,12 +28,11 @@ public class Board extends JPanel {
 
     // Constructors
     public Board(GameWindow g) {
-//        try {
-//            chessBoard = ImageIO.read(Board.class.getResource("/ChessAssets/chessBoard.png"));
-//        } catch (IOException e) {
-//            System.out.println("File not found: " + e.getMessage());
-//        }
-
+        try {
+            chessBoard = ImageIO.read(Board.class.getResource("/ChessAssets/chessBoard.png"));
+        } catch (IOException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
         this.g = g;
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
