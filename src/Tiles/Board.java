@@ -78,6 +78,12 @@ public class Board extends JPanel {
             g2.fillRect(blackKing.getSquare().getX(), blackKing.getSquare().getY(), 65, 65);
         }
 
+        // Last Move
+        if (start != null) {
+            g2.setPaint(new Color(246, 246, 105));
+            g2.fillRect(start.getX(), start.getY(), 65, 65);
+            g2.fillRect(end.getX(), end.getY(), 65, 65);
+        }
 
         // Guide Lines
         if (currPiece != null) {
@@ -95,13 +101,6 @@ public class Board extends JPanel {
                     g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
                 }
             }
-        }
-
-        // Last Move
-        if (start != null) {
-            g2.setPaint(new Color(246, 246, 105));
-            g2.fillRect(start.getX(), start.getY(), 65, 65);
-            g2.fillRect(end.getX(), end.getY(), 65, 65);
         }
 
         for (int i = 0; i < 8; i++) {
