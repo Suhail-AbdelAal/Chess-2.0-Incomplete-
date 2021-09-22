@@ -202,7 +202,7 @@ public class Game extends JPanel {
     }
 
     // Setters & Getters
-    public Square[][] getSquareArray() {
+    public Square[][] getBoard() {
         return board;
     }
 

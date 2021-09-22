@@ -22,7 +22,7 @@ public class Bishop extends Piece{
     @Override
     public LinkedList<Square> getLegalMoves(Game game) {
         legalMoves.clear();
-        Square[][] sq = game.getSquareArray();
+        Square[][] sq = game.getBoard();
 
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();

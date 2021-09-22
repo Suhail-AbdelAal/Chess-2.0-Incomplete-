@@ -25,7 +25,7 @@ public class King extends Piece implements CheckMate {
     // Methods
     public LinkedList<Square> getBlockMoves(Game game) {
         blockMoves.clear();
-        Square[][] sq = game.getSquareArray();
+        Square[][] sq = game.getBoard();
 
         int xPiece = checkPiece.getSquare().getxNum();
         int yPiece = checkPiece.getSquare().getyNum();
@@ -85,7 +85,7 @@ public class King extends Piece implements CheckMate {
     @Override
     public LinkedList<Square> getLegalMoves(Game game) {
         legalMoves.clear();
-        Square[][] sq = game.getSquareArray();
+        Square[][] sq = game.getBoard();
 
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();

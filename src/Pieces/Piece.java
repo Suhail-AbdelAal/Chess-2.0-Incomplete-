@@ -76,7 +76,7 @@ public abstract class Piece {
     }
 
     public int[] Linear_Occupied_Spots(Game game, int x, int y) {
-        Square[][] sq = game.getSquareArray();
+        Square[][] sq = game.getBoard();
 
         int top = 0, bottom = 7;
         int right = 7, left = 0;
@@ -137,7 +137,7 @@ public abstract class Piece {
     }
 
     public int[] Diagonal_Occupied_Spots(Game game, int x, int y) {
-        Square[][] sq = game.getSquareArray();
+        Square[][] sq = game.getBoard();
 
         int top_x_left = x;
         int top_y_left = y;
