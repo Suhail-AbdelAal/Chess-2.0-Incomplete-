@@ -1,6 +1,6 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 import java.util.LinkedList;
 
@@ -15,17 +15,17 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Square start, Square end) {
-        return this.getLegalMoves(board).contains(end);
+    public boolean canMove(Game game, Square start, Square end) {
+        return this.getLegalMoves(game).contains(end);
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board board) {
+    public LinkedList<Square> getLegalMoves(Game game) {
         this.legalMoves.clear();
         leftSide = null;
         rightSide = null;
 
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
         Square pos = this.getSquare();
 
         int m = !this.isFirstMoveDone() ? 2 : 1;
@@ -81,5 +81,12 @@ public class Pawn extends Piece {
         }
         return legalMoves;
     }
-
+    @Override
+    public LinkedList<Square> returnLegalMoves() {
+        return legalMoves;
+    }
+    @Override
+    public void clearLegalMoves() {
+        legalMoves.clear();
+    }
 }

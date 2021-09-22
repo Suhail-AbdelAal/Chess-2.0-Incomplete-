@@ -7,14 +7,14 @@ import java.awt.*;
 
 public class Square extends JComponent {
 
-    private final Board board;
+    private final Game game;
     private Piece occPiece;
 
     private int xNum, yNum;
 
     // Constructors
-    public Square(Board board, int x, int y) {
-        this.board = board;
+    public Square(Game game, int x, int y) {
+        this.game = game;
         this.xNum = x;
         this.yNum = y;
         this.setBorder(BorderFactory.createEmptyBorder());
@@ -42,10 +42,10 @@ public class Square extends JComponent {
     }
     public void capture(Piece p) {
         if (getPiece().getColor() == 1)
-            board.wPieces.remove(getPiece());
+            game.wPieces.remove(getPiece());
 
         else
-            board.bPieces.remove(getPiece());
+            game.bPieces.remove(getPiece());
 
         this.occPiece = null;
         this.put(p);

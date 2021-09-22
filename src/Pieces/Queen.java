@@ -1,6 +1,6 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 
 import java.util.LinkedList;
@@ -15,21 +15,21 @@ public class Queen extends Piece{
     }
 
     @Override
-    public boolean canMove(Board board, Square start, Square end) {
+    public boolean canMove(Game game, Square start, Square end) {
         return false;
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board board) {
+    public LinkedList<Square> getLegalMoves(Game game) {
         legalMoves.clear();
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
 
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();
 
         // --- Linear Occupations ---
 
-        int[] linear_occupations = super.Linear_Occupied_Spots(board, x, y);
+        int[] linear_occupations = super.Linear_Occupied_Spots(game, x, y);
 
         // Vertically
         for (int i = linear_occupations[0]; i <= linear_occupations[1]; i++) {
@@ -43,7 +43,7 @@ public class Queen extends Piece{
         }
 
         // --- Diagonal Occupations ---
-        int[] diagonal_occupations = super.Diagonal_Occupied_Spots(board, x, y);
+        int[] diagonal_occupations = super.Diagonal_Occupied_Spots(game, x, y);
 
         // TOP RIGHT -> BOTTOM LEFT
         for (int i = diagonal_occupations[0], j = diagonal_occupations[1]; i <= diagonal_occupations[6] && j >= diagonal_occupations[7]; i++, j--) {
@@ -57,5 +57,12 @@ public class Queen extends Piece{
         }
         return legalMoves;
     }
-
+    @Override
+    public LinkedList<Square> returnLegalMoves() {
+        return legalMoves;
+    }
+    @Override
+    public void clearLegalMoves() {
+        legalMoves.clear();
+    }
 }

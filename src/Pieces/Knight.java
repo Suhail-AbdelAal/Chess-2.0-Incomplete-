@@ -1,6 +1,6 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 import java.util.LinkedList;
 
@@ -15,7 +15,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Square start, Square end) {
+    public boolean canMove(Game game, Square start, Square end) {
         if (end.isOccupied())
             return start.getPiece().getColor() != end.getPiece().getColor();
 
@@ -23,9 +23,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board board) {
+    public LinkedList<Square> getLegalMoves(Game game) {
         this.legalMoves.clear();
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();
 
@@ -34,12 +34,19 @@ public class Knight extends Piece {
             int adjuster = (Math.abs(i) == 1) ? 2 : 1;
             for (int j = adjuster; j >= -2; j -= adjuster * 2) {
                 try {
-                    if (this.canMove(board, sq[x][y], sq[x + i][y + j]))
+                    if (this.canMove(game, sq[x][y], sq[x + i][y + j]))
                         legalMoves.add(sq[x + i][y + j]);
                 } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
         }
         return legalMoves;
     }
-
+    @Override
+    public LinkedList<Square> returnLegalMoves() {
+        return legalMoves;
+    }
+    @Override
+    public void clearLegalMoves() {
+        legalMoves.clear();
+    }
 }

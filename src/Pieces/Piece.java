@@ -1,6 +1,6 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 
 import javax.imageio.ImageIO;
@@ -75,8 +75,8 @@ public abstract class Piece {
         g2.drawImage(this.img, x, y, 60, 55, null);
     }
 
-    public int[] Linear_Occupied_Spots(Board board, int x, int y) {
-        Square[][] sq = board.getSquareArray();
+    public int[] Linear_Occupied_Spots(Game game, int x, int y) {
+        Square[][] sq = game.getSquareArray();
 
         int top = 0, bottom = 7;
         int right = 7, left = 0;
@@ -136,8 +136,8 @@ public abstract class Piece {
         return new int[] {top, bottom, right, left};
     }
 
-    public int[] Diagonal_Occupied_Spots(Board board, int x, int y) {
-        Square[][] sq = board.getSquareArray();
+    public int[] Diagonal_Occupied_Spots(Game game, int x, int y) {
+        Square[][] sq = game.getSquareArray();
 
         int top_x_left = x;
         int top_y_left = y;
@@ -238,6 +238,8 @@ public abstract class Piece {
     }
 
     // abstract methods
-    public abstract boolean canMove(Board board, Square start, Square end);
-    public abstract LinkedList<Square> getLegalMoves(Board board);
+    public abstract boolean canMove(Game game, Square start, Square end);
+    public abstract LinkedList<Square> getLegalMoves(Game game);
+    public abstract LinkedList<Square> returnLegalMoves();
+    public abstract void clearLegalMoves();
 }

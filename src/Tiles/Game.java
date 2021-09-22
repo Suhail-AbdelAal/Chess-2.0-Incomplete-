@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class Board extends JPanel {
+public class Game extends JPanel {
 
-    private GameWindow g;
+    private GameWindow gameWindow;
     private final Square[][] board;
     private Square spot_start;
     private Square start, end;
@@ -25,13 +25,13 @@ public class Board extends JPanel {
     public final LinkedList<Piece> bPieces;
 
     // Constructors
-    public Board(GameWindow g) {
+    public Game(GameWindow gameWindow) {
         try {
-            chessBoard = ImageIO.read(Board.class.getResource("/ChessAssets/chessBoard.png"));
+            chessBoard = ImageIO.read(Game.class.getResource("/ChessAssets/chessBoard.png"));
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
         }
-        this.g = g;
+        this.gameWindow = gameWindow;
         this.bPieces = new LinkedList<>();
         this.wPieces = new LinkedList<>();
         start = null;
@@ -65,15 +65,21 @@ public class Board extends JPanel {
         // Check
         if (whiteKing.isKingChecked()) {
             System.out.println(whiteKing.getBlockMoves(this).size());
-            for (Square i : whiteKing.getBlockMoves(this)) {
-                g2.setStroke(new BasicStroke(5));
-                g2.setPaint(Color.blue);
+            g2.setStroke(new BasicStroke(5));
+            g2.setPaint(Color.blue);
+            for (Square i : whiteKing.getBlockMoves(this))
                 g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
-            }
+
             g2.setPaint(new Color(255, 0, 0, 180));
             g2.fillRect(whiteKing.getSquare().getX(), whiteKing.getSquare().getY(), 65, 65);
         }
         else if (blackKing.isKingChecked()) {
+            System.out.println(blackKing.getBlockMoves(this).size());
+            g2.setStroke(new BasicStroke(5));
+            g2.setPaint(Color.blue);
+            for (Square i : blackKing.getBlockMoves(this))
+                g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+
             g2.setPaint(new Color(255, 0, 0, 180));
             g2.fillRect(blackKing.getSquare().getX(), blackKing.getSquare().getY(), 65, 65);
         }
@@ -90,15 +96,44 @@ public class Board extends JPanel {
             g2.setPaint(new Color(246, 246, 105));
             g2.fillRect(currPiece.getSquare().getX(), currPiece.getSquare().getY(), 65, 65);
 
-            for (Square i : currPiece.getLegalMoves(this)) {
-                g2.setStroke(new BasicStroke(3));
-                if (i.isOccupied()) {
-                    g2.setPaint(Color.red);
-                    g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+            if (!whiteKing.isKingChecked() && !blackKing.isKingChecked()) {
+                for (Square i : currPiece.getLegalMoves(this)) {
+                    g2.setStroke(new BasicStroke(3));
+                    if (i.isOccupied()) {
+                        g2.setPaint(Color.red);
+                        g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+                    } else {
+                        g2.setPaint(new Color(180, 100, 100));
+                        g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
+                    }
                 }
-                else {
-                    g2.setPaint(new Color(180, 100, 100));
-                    g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
+            }
+            else if (whiteKing.isKingChecked() && !(currPiece instanceof King)) {
+                for (Square i : currPiece.getLegalMoves(this)) {
+                    if (whiteKing.getBlockMoves(this).contains(i)) {
+                        g2.setStroke(new BasicStroke(3));
+                        if (i.isOccupied()) {
+                            g2.setPaint(Color.red);
+                            g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+                        } else {
+                            g2.setPaint(new Color(180, 100, 100));
+                            g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
+                        }
+                    }
+                }
+            }
+            else if (blackKing.isKingChecked()){
+                for (Square i : currPiece.getLegalMoves(this)) {
+                   if (blackKing.getBlockMoves(this).contains(i)) {
+                       g2.setStroke(new BasicStroke(3));
+                       if (i.isOccupied()) {
+                           g2.setPaint(Color.red);
+                           g2.drawRect(i.getX() + 2, i.getY() + 1, 62, 63);
+                       } else {
+                           g2.setPaint(new Color(180, 100, 100));
+                           g2.fillOval(i.getX() + 19, i.getY() + 19, 25, 25);
+                       }
+                   }
                 }
             }
         }

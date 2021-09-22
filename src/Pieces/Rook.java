@@ -1,6 +1,6 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 import java.util.LinkedList;
 
@@ -15,19 +15,19 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Board board, Square start, Square end) {
+    public boolean canMove(Game game, Square start, Square end) {
         return false;
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board board) {
+    public LinkedList<Square> getLegalMoves(Game game) {
         this.legalMoves.clear();
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
 
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();
 
-        int[] occupations = super.Linear_Occupied_Spots(board, x, y);
+        int[] occupations = super.Linear_Occupied_Spots(game, x, y);
 
         // Vertically
         for (int i = occupations[0]; i <= occupations[1]; i++) {
@@ -41,5 +41,12 @@ public class Rook extends Piece {
         }
         return legalMoves;
     }
-
+    @Override
+    public LinkedList<Square> returnLegalMoves() {
+        return legalMoves;
+    }
+    @Override
+    public void clearLegalMoves() {
+        legalMoves.clear();
+    }
 }

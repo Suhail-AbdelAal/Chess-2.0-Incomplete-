@@ -1,17 +1,17 @@
 package Pieces;
 
-import Tiles.Board;
+import Tiles.Game;
 import Tiles.Square;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class King extends Piece implements CheckMate {
 
     private LinkedList<Square> legalMoves;
-    private LinkedList<Square> blockMoves;
-    private LinkedList<Piece> allowedPieces;
+    private final LinkedList<Square> blockMoves;
+    private final LinkedList<Piece> allowedPieces;
     private boolean kingChecked;
     private Piece checkPiece;
+    private Piece currPiece;
 
     public King(int color, Square initSq, String img_path) {
         super(color, initSq, img_path);
@@ -23,9 +23,9 @@ public class King extends Piece implements CheckMate {
 
 
     // Methods
-    public LinkedList<Square> getBlockMoves(Board board) {
+    public LinkedList<Square> getBlockMoves(Game game) {
         blockMoves.clear();
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
 
         int xPiece = checkPiece.getSquare().getxNum();
         int yPiece = checkPiece.getSquare().getyNum();
@@ -37,11 +37,11 @@ public class King extends Piece implements CheckMate {
         if (xPiece < xKing) {
             for (int i = 0; i < Math.abs(xKing - xPiece); i++) {
                 try {
-                    if (yPiece < yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece + i][yPiece + i]))
+                    if (yPiece < yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece + i][yPiece + i]))
                         blockMoves.add(sq[xPiece + i][yPiece + i]);
-                    else if (yPiece > yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece + i][yPiece - i]))
+                    else if (yPiece > yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece + i][yPiece - i]))
                         blockMoves.add(sq[xPiece + i][yPiece - i]);
-                    else if (yPiece == yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece + i][yPiece]))
+                    else if (yPiece == yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece + i][yPiece]))
                         blockMoves.add(sq[xPiece + i][yPiece]);
 
                 } catch(ArrayIndexOutOfBoundsException ignored) {}
@@ -50,11 +50,11 @@ public class King extends Piece implements CheckMate {
         else if (xPiece > xKing) {
             for (int i = 0; i < Math.abs(xKing - xPiece); i++) {
                 try {
-                    if (yPiece < yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece - i][yPiece + i]))
+                    if (yPiece < yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece - i][yPiece + i]))
                         blockMoves.add(sq[xPiece - i][yPiece + i]);
-                    else if (yPiece > yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece - i][yPiece - i]))
+                    else if (yPiece > yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece - i][yPiece - i]))
                         blockMoves.add(sq[xPiece - i][yPiece - i]);
-                    else if (yPiece == yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece - i][yPiece]))
+                    else if (yPiece == yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece - i][yPiece]))
                         blockMoves.add(sq[xPiece - i][yPiece]);
 
                 } catch(ArrayIndexOutOfBoundsException ignored) {}
@@ -63,9 +63,9 @@ public class King extends Piece implements CheckMate {
         else {
             for (int i = 0; i < Math.abs(yKing - yPiece); i++) {
                 try {
-                    if (yPiece < yKing  && checkPiece.getLegalMoves(board).contains(sq[xPiece][yPiece + i]))
+                    if (yPiece < yKing  && checkPiece.getLegalMoves(game).contains(sq[xPiece][yPiece + i]))
                         blockMoves.add(sq[xPiece][yPiece + i]);
-                    else if (yPiece > yKing && checkPiece.getLegalMoves(board).contains(sq[xPiece][yPiece - i]))
+                    else if (yPiece > yKing && checkPiece.getLegalMoves(game).contains(sq[xPiece][yPiece - i]))
                         blockMoves.add(sq[xPiece][yPiece - i]);
 
                 } catch(ArrayIndexOutOfBoundsException ignored) {}
@@ -75,7 +75,7 @@ public class King extends Piece implements CheckMate {
     }
 
     @Override
-    public boolean canMove(Board board, Square start, Square end) {
+    public boolean canMove(Game game, Square start, Square end) {
         if (end.isOccupied())
             return start.getPiece().getColor() != end.getPiece().getColor();
 
@@ -83,9 +83,9 @@ public class King extends Piece implements CheckMate {
     }
 
     @Override
-    public LinkedList<Square> getLegalMoves(Board board) {
+    public LinkedList<Square> getLegalMoves(Game game) {
         legalMoves.clear();
-        Square[][] sq = board.getSquareArray();
+        Square[][] sq = game.getSquareArray();
 
         int x = this.getSquare().getxNum();
         int y = this.getSquare().getyNum();
@@ -94,8 +94,9 @@ public class King extends Piece implements CheckMate {
             for (int j = 1; j > -2; j--) {
                 if (i == x && j == y) continue;
                 try {
-                    if (this.canMove(board, this.getSquare(), sq[x + i][y + j]))
+                    if (this.canMove(game, this.getSquare(), sq[x + i][y + j]) && this.isSquareSave(game, sq[x + i][y + j])) {
                         legalMoves.add(sq[x + i][y + j]);
+                    }
                 } catch (ArrayIndexOutOfBoundsException ignored) {}
             }
         }
@@ -103,25 +104,23 @@ public class King extends Piece implements CheckMate {
     }
 
     @Override
-    public void checkDetector(Board board) {
+    public void kingCheckDetector(Game game) {
         if (this.getColor() == 1) {
-            for (Piece i : board.bPieces) {
-                i.getLegalMoves(board);
-                 kingChecked = i.getLegalMoves(board).contains(this.getSquare());
+            for (Piece i : game.bPieces) {
+                 kingChecked = i.getLegalMoves(game).contains(this.getSquare());
                  if (kingChecked) {
                     checkPiece = i;
-                    this.getAllowedPieces(board);
-                     break;
+                    this.getBlockMoves(game);
+                    break;
                  }
             }
         }
         else {
-            for (Piece i : board.wPieces) {
-                i.getLegalMoves(board);
-                kingChecked = i.getLegalMoves(board).contains(this.getSquare());
+            for (Piece i : game.wPieces) {
+                kingChecked = i.getLegalMoves(game).contains(this.getSquare());
                 if (kingChecked) {
                     checkPiece = i;
-                    this.getAllowedPieces(board);
+                    this.getBlockMoves(game);
                     break;
                 }
             }
@@ -129,6 +128,23 @@ public class King extends Piece implements CheckMate {
         this.setKingChecked(kingChecked);
     }
 
+    @Override
+    public boolean isSquareSave(Game game, Square spot) {
+        if (this.getColor() == 1) {
+            for (Piece i : game.bPieces) {
+                if (i instanceof King) continue;
+                if (i.getLegalMoves(game).contains(spot))
+                    return false;
+            }
+        } else {
+            for (Piece i : game.wPieces) {
+                if (i instanceof King) continue;
+                if (i.getLegalMoves(game).contains(spot))
+                    return false;
+            }
+        }
+        return true;
+    }
     @Override
     public void setKingChecked(boolean kingChecked) {
         this.kingChecked = kingChecked;
@@ -139,37 +155,18 @@ public class King extends Piece implements CheckMate {
         return this.kingChecked;
     }
 
-    @Override
-    public LinkedList<Piece> getAllowedPieces(Board board) {
-        if (this.getColor() == 1) {
-            for (Piece i : board.wPieces) {
-                AtomicReference<Piece> currPiece = new AtomicReference<>(i);
-                i.getLegalMoves(board).clear();
-                for (Square j : this.getBlockMoves(board)) {
-                    if (currPiece.get().getLegalMoves(board).contains(j)) {
-                        allowedPieces.add(i);
-                        i.getLegalMoves(board).add(j);
-                    }
-                }
-            }
-        }
-        else {
-            for (Piece i : board.bPieces) {
-                AtomicReference<Piece> currPiece = new AtomicReference<>(i);
-                i.getLegalMoves(board).clear();
-                for (Square j : this.getBlockMoves(board)) {
-                    if (currPiece.get().getLegalMoves(board).contains(j)) {
-                        allowedPieces.add(i);
-                        i.getLegalMoves(board).add(j);
-                    }
-                }
-            }
-        }
-        return allowedPieces;
-    }
 
     @Override
     public boolean checkMate() {
         return false;
+    }
+
+    @Override
+    public LinkedList<Square> returnLegalMoves() {
+        return legalMoves;
+    }
+    @Override
+    public void clearLegalMoves() {
+        legalMoves.clear();
     }
 }

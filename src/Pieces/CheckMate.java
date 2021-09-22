@@ -1,13 +1,12 @@
 package Pieces;
 
-import Tiles.Board;
-
-import java.util.LinkedList;
+import Tiles.Game;
+import Tiles.Square;
 
 public interface CheckMate {
-    void checkDetector(Board board);
+    void kingCheckDetector(Game game);
+    boolean isSquareSave(Game game, Square spot);
     void setKingChecked(boolean kingChecked);
     boolean isKingChecked();
-    LinkedList<Piece> getAllowedPieces(Board board);
     boolean checkMate();
 }

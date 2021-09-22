@@ -1,6 +1,6 @@
 package Display;
 
-import Tiles.Board;
+import Tiles.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,14 +9,14 @@ public class GameWindow {
 
     private int width, height;
     private JFrame frame;
-    private Board board;
+    private Game game;
 
     // Constructors
     public GameWindow() {
         frame = new JFrame("Chess");
         ///
-        board = new Board(this);
-        frame.add(board);
+        game = new Game(this);
+        frame.add(game);
 
 
         ///
